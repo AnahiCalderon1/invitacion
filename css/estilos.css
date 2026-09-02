@@ -1,0 +1,296 @@
+/* ============ TOKENS =================
+   EDITAR ACÁ: colores, y las variables del sobre más abajo.
+   Nombres/fecha/lugar están en index.html.
+=========================================== */
+:root{
+  --bordo:        #6d1b35;
+  --bordo-oscuro: #4c1225;
+  --oro:          #c9a35d;
+  --papel:        #faf3e6;
+  --tinta:        #3a1220;
+  --tinta-suave:  #7a5a63;
+  --fondo:        #ede3d3;
+
+  --serif: 'Cormorant Garamond', 'Georgia', serif;
+  --script: 'Parisienne', cursive;
+
+ 
+  --sobre-ratio: 3 / 4;
+  --sello-ancho: 22%;
+  --sello-top: 56%;
+}
+
+*{ box-sizing: border-box; }
+
+html, body{
+  margin:0;
+  padding:0;
+  height:100%;
+  background: var(--bordo-oscuro);
+  font-family: var(--serif);
+  color: var(--tinta);
+  overflow: hidden; /* se libera por JS cuando se abre la invitación */
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+
+.escena{
+  position: fixed;
+  inset: 0;
+  background: var(--bordo-oscuro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.sobre{
+  position: relative;
+  cursor: pointer;
+  aspect-ratio: var(--sobre-ratio);
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  /* esta combinación es la que "contiene" la imagen sin recortarla,
+     sea cual sea la proporción de la pantalla */
+}
+.sobre:focus-visible{ outline: 3px solid var(--oro); outline-offset: -6px; }
+
+.sobre-img{
+  position:absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: opacity .7s ease .4s, transform .7s ease .4s;
+}
+
+.sobre.abierto{ pointer-events:none; }
+.sobre.abierto .sobre-img{
+  opacity: 0;
+  transform: scale(1.05);
+}
+
+.sello-wrap{
+  position:absolute;
+  left:50%;
+  top: var(--sello-top);
+  width: var(--sello-ancho);
+  aspect-ratio: 1;
+  transform: translate(-50%,-50%);
+  transition: transform .8s ease;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
+  z-index: 5;
+}
+.sobre:hover .sello-wrap{ transform: translate(-50%,-50%) scale(1.05); }
+
+.sello-mitad{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  transition: transform .55s cubic-bezier(.3,.6,.3,1), opacity .55s ease;
+}
+/* cada mitad muestra solo su lado del sello; juntas arman el círculo entero */
+.sello-izq{ clip-path: inset(0 50% 0 0); }
+.sello-der{ clip-path: inset(0 0 0 50%); }
+
+/* al abrir, el sello se "rompe" en dos y las mitades vuelan hacia los costados */
+.sobre.abierto .sello-izq{ transform: translate(-65%,-18%) rotate(-24deg); opacity:0; }
+.sobre.abierto .sello-der{ transform: translate(65%,-18%) rotate(24deg); opacity:0; }
+
+/* ---- Luz mágica: un brillo breve, tipo reloj de arena, que se filtra
+   por la línea del sobre al abrirse (nada de chispitas ni estrellitas,
+   solo luz suave y difusa). Usa la MISMA var(--sello-top), así el
+   brillo siempre nace justo del punto donde está el sello. ---- */
+
+.luz-arriba, .luz-abajo{
+  position:absolute;
+  left:0; right:0;
+  opacity:0;
+  pointer-events:none;
+  z-index: 3;
+  filter: blur(7px);
+}
+.luz-arriba{
+  top:0;
+  height: var(--sello-top);
+  clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+  background: linear-gradient(to top, rgba(231, 148, 220, 0.95) 0%, rgba(255,214,214,.35) 55%, transparent 100%);
+}
+.luz-abajo{
+  top: var(--sello-top);
+  bottom:0;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background: linear-gradient(to bottom, rgba(231, 151, 198, 0.95) 0%, rgba(255,214,214,.35) 55%, transparent 100%);
+}
+.luz-nucleo{
+  position:absolute;
+  left:50%; top: var(--sello-top);
+  width: 12vmin; height: 12vmin;
+  transform: translate(-50%,-50%) scale(0);
+  border-radius: 50%;
+  background: radial-gradient(circle, lch(54.47% 57.44 324.24) 0%, #ee97d8 40%, transparent 72%);
+  filter: blur(4px);
+  opacity: 0;
+  z-index: 4;
+  pointer-events:none;
+}
+
+@keyframes luz-flash{
+  0%   { opacity: 0; }
+  22%  { opacity: 1; }
+  65%  { opacity: .8; }
+  100% { opacity: 0; }
+}
+@keyframes nucleo-flash{
+  0%   { opacity: 0; transform: translate(-50%,-50%) scale(.2); }
+  25%  { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(1.6); }
+}
+
+.sobre.abierto .luz-arriba,
+.sobre.abierto .luz-abajo{ animation: luz-flash 1200ms ease-out forwards; }
+.sobre.abierto .luz-nucleo{ animation: nucleo-flash 1200ms ease-out forwards; }
+
+/* ======================================================
+   INVITACIÓN COMPLETA
+====================================================== */
+.invitacion{
+  position: fixed;
+  inset: 0;
+  background: var(--fondo);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px);
+  transition: opacity 700ms ease, transform 700ms ease, visibility 0s linear 700ms;
+  z-index: 20;
+}
+.invitacion.visible{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 700ms ease 100ms, transform 700ms ease 100ms;
+}
+
+.invitacion-contenido{
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 64px 24px 96px;
+  text-align:center;
+}
+
+.cerrar{
+  position: sticky;
+  top: 18px;
+  display:flex;
+  justify-content:flex-end;
+  max-width: 640px;
+  padding: 0 24px;
+  margin: 0 auto;
+}
+.cerrar button{
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  font-style: italic;
+  background: none;
+  border: 1px solid var(--tinta-suave);
+  color: var(--tinta-suave);
+  border-radius: 20px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+.cerrar button:hover{ border-color: var(--bordo); color: var(--bordo); }
+
+.orla{ width: 46px; height:46px; margin: 0 auto 18px; }
+.orla svg path{ fill:none; stroke: var(--oro); stroke-width: 1.4; }
+
+.kicker{ font-style: italic; letter-spacing: 0.04em; color: var(--tinta-suave); font-size: 1.05rem; margin: 4px 0 2px; }
+
+.nombres{
+  font-family: var(--script);
+  color: var(--bordo);
+  font-size: clamp(2.6rem, 9vw, 4.2rem);
+  line-height: 1.05;
+  margin: 6px 0 18px;
+}
+
+.fecha-grande{ font-size: clamp(1.3rem, 4vw, 1.7rem); letter-spacing: 0.08em; margin-bottom: 6px; }
+.lugar-corto{ color: var(--tinta-suave); font-style: italic; margin-bottom: 40px; }
+
+.divisor{ display:flex; align-items:center; gap: 14px; max-width: 260px; margin: 40px auto; color: var(--oro); }
+.divisor::before, .divisor::after{ content:""; flex:1; height:1px; background: linear-gradient(to right, transparent, var(--oro), transparent); }
+.divisor svg{ width:16px; height:16px; }
+.divisor svg path{ fill: var(--oro); }
+
+.cuenta-regresiva{ display:flex; justify-content:center; gap: clamp(10px, 4vw, 26px); margin: 8px 0 44px; flex-wrap: wrap; }
+.cr-item{ min-width: 64px; }
+.cr-num{ font-size: clamp(1.8rem, 5vw, 2.4rem); color: var(--bordo); font-weight: 600; }
+.cr-label{ font-size: 0.8rem; letter-spacing: 0.08em; color: var(--tinta-suave); font-style: italic; }
+
+.detalles{ display:grid; gap: 28px; margin: 44px 0; }
+@media (min-width: 560px){ .detalles{ grid-template-columns: 1fr 1fr;  } }
+.detalle h3{ font-family: var(--serif); font-style: italic; font-weight: 500; color: var(--bordo); font-size: 1.3rem; margin: 0 0 6px; }
+.detalle p{ margin: 2px 0; color: var(--tinta); line-height: 1.5; }
+.detalle a{ color: var(--tinta-suave); text-decoration: underline; }
+
+/* Un solo mapa de Google Maps, centrado debajo de las dos tarjetas de
+   detalle (ceremonia/fiesta), ya que es el mismo lugar. Todo el bloque
+   es un link: un solo click en cualquier parte del mapa abre Google
+   Maps en una pestaña nueva con la ubicación exacta. */
+.mapa-ubicacion{
+  position: relative;
+  display: block;
+  max-width: 420px;
+  margin: -8px auto 44px;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,.18);
+  text-decoration: none;
+}
+.mapa-ubicacion iframe{
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  pointer-events: none; /* el click siempre abre Maps, no interactúa con el mapa embebido */
+}
+.mapa-etiqueta{
+  position: absolute;
+  left:0; right:0; bottom:0;
+  padding: 20px 12px 8px;
+  background: linear-gradient(to top, rgba(58,18,32,.78), transparent);
+  color: var(--papel);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: .85rem;
+  text-align: center;
+}
+
+.parrafo{ max-width: 440px; margin: 0 auto 8px; line-height: 1.7; font-size: 1.08rem; }
+
+.rsvp{ margin-top: 48px; }
+.rsvp p{ color: var(--tinta-suave); font-style: italic; margin-bottom: 18px; }
+.boton-rsvp{
+  display:inline-block;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--papel);
+  background: var(--bordo);
+  padding: 13px 34px;
+  border-radius: 30px;
+  text-decoration:none;
+  transition: background .25s ease, transform .25s ease;
+}
+.boton-rsvp:hover{ background: var(--bordo-oscuro); transform: translateY(-1px); }
+
+.firma{ margin-top: 60px; font-family: var(--script); color: var(--oro); font-size: 1.6rem; }
