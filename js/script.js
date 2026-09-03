@@ -11,6 +11,8 @@ const sobre      = document.getElementById('sobre');
 const invitacion = document.getElementById('invitacion');
 const btnCerrar  = document.getElementById('btnCerrar');
 const eventos = document.querySelectorAll('.evento');
+const lineaProgreso = document.getElementById('lineaProgreso');
+let maxVisible = -1;
 const obs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add('visible');
@@ -18,7 +20,20 @@ const obs = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 eventos.forEach(ev => obs.observe(ev));
 let abierto = false;
+const obsPrograma = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      entry.target.classList.add('visible');
+      const idx = Array.from(eventos).indexOf(entry.target);
+      if (idx > maxVisible){
+        maxVisible = idx;
+        lineaProgreso.style.height = ((maxVisible + 1) / eventos.length * 100) + '%';
+      }
+    }
+  });
+}, { threshold: 0.4 });
 
+eventos.forEach(ev => obsPrograma.observe(ev));
 function abrirSobre(){
   if (abierto) return;
   abierto = true;

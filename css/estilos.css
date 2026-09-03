@@ -309,72 +309,87 @@ html, body{
 .detalle p{ margin: 2px 0; color: var(--tinta); line-height: 1.5; }
 .detalle a{ color: var(--tinta-suave); text-decoration: underline; }
 
+
 .programa{ margin: 56px 0 44px; }
 
 .programa-titulo{
   font-family: var(--script);
   color: var(--bordo);
   font-size: clamp(2rem, 6vw, 2.6rem);
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 }
 
 .linea-tiempo{
   position: relative;
-  max-width: 320px;
+  max-width: 360px;
   margin: 0 auto;
-  padding-left: 62px;
-  text-align: left;
 }
 
-.linea-tiempo::before{
-  content:"";
-  position:absolute;
-  left: 21px;
+.linea-fondo,
+.linea-progreso{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   top: 6px;
-  bottom: 6px;
   width: 1px;
-  background: linear-gradient(to bottom, transparent, var(--oro), var(--oro), transparent);
+}
+.linea-fondo{
+  bottom: 6px;
+  background: rgba(201,163,93,.35);
+}
+.linea-progreso{
+  height: 0%;
+  background: var(--oro);
+  transition: height .7s ease;
 }
 
 .evento{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  column-gap: 18px;
   position: relative;
   margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .6s ease, transform .6s ease;
 }
 .evento:last-child{ margin-bottom: 0; }
+.evento.visible{ opacity: 1; transform: translateY(0); }
 
 .evento-icono{
-  position: absolute;
-  left: -62px;
-  top: -4px;
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--fondo);
-  border: 1px solid var(--oro);
-  border-radius: 50%;
+  grid-column: 1;
+  justify-self: end;
 }
-.evento-icono svg{
-  width: 20px;
-  height: 20px;
-}
-.evento-icono svg path,
-.evento-icono svg circle{
-  fill: none;
-  stroke: var(--bordo);
-  stroke-width: 1.3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.evento-icono img{
+  width: 84px;
+  height: 84px;
+  display: block;
+  filter: drop-shadow(0 2px 3px rgba(58,18,32,.18));
 }
 
+.evento-punto{
+  grid-column: 2;
+  width: 9px;
+  height: 9px;
+  border: 1.4px solid var(--oro);
+  border-radius: 50%;
+  background: var(--fondo);
+  z-index: 1;
+}
+
+.evento-texto{
+  grid-column: 3;
+  justify-self: start;
+  text-align: left;
+}
 .evento-texto h3{
   font-family: var(--serif);
   font-style: italic;
   font-weight: 500;
   color: var(--bordo);
   font-size: 1.15rem;
-  margin: 4px 0 2px;
+  margin: 0 0 2px;
 }
 .evento-texto p{
   margin: 0;
@@ -387,15 +402,6 @@ html, body{
   color: var(--oro);
   font-size: 1.8rem;
   margin-top: 44px;
-}
-.evento{
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity .6s ease, transform .6s ease;
-}
-.evento.visible{
-  opacity: 1;
-  transform: translateY(0);
 }
 /* Un solo mapa de Google Maps, centrado debajo de las dos tarjetas de
    detalle (ceremonia/fiesta), ya que es el mismo lugar. Todo el bloque
