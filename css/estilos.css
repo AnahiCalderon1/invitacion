@@ -276,7 +276,7 @@ html, body{
 
 .kicker{ font-style: italic; letter-spacing: 0.04em; color: var(--bordo); font-size: 1.05rem; margin: 4px 0 2px; }
 .hoja{ align-items: center; justify-content: center; display: flex; flex-direction: column;  background-size: cover; background-position: center; padding: 0 2px;  width: 100%;
-  min-height: 100vh;  }
+  }
 .nombres{
   font-family: var(--script);
   color: var(--bordo);
