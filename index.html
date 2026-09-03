@@ -14,24 +14,41 @@
 <body>
 
   <!-- ============================================================
-       PASO 1: EL SOBRE — pantalla completa, armado con dos imágenes
-       (imagenes/sobre.svg + imagenes/selloCarta.svg)
+       PASO 1: EL SOBRE — pantalla completa, con imagen de cerrado
+       y de abierto (imagenes/sobreCerrado.svg + sobreAbierto.svg)
   ============================================================= -->
   <div class="escena">
     <div class="sobre" id="sobre" role="button" tabindex="0" aria-label="Abrir invitación">
-      <img class="sobre-img" src="imagenes/sobre.svg" alt="">
+      <img class="sobre-img sobre-cerrado" src="imagenes/sobreCerrado.svg" alt="">
+      <img class="sobre-img sobre-abierto" src="imagenes/sobreAbierto.svg" alt="">
 
       <div class="sello-wrap">
         <img class="sello-mitad sello-izq" src="imagenes/selloCarta.svg" alt="">
         <img class="sello-mitad sello-der" src="imagenes/selloCarta.svg" alt="">
       </div>
 
-      <!-- luz mágica: un brillo breve que se filtra por la línea del sobre al abrirse -->
+      <!-- luz mágica -->
       <div class="luz-arriba" aria-hidden="true"></div>
       <div class="luz-abajo" aria-hidden="true"></div>
       <div class="luz-nucleo" aria-hidden="true"></div>
+
+      <!-- collage que sube desde adentro del sobre -->
+      <img class="collage" src="imagenes/collage.svg" alt="">
+
+      <!-- brillitos chiquitos y delicados, como polvo mágico, mientras sube -->
+      <div class="brillitos" aria-hidden="true">
+        <span class="brillito" style="--bx:-16vmin; --by:-14vmin; --size:5px; animation-delay:280ms;"></span>
+        <span class="brillito" style="--bx:14vmin;  --by:-18vmin; --size:4px; animation-delay:340ms;"></span>
+        <span class="brillito" style="--bx:-9vmin;  --by:6vmin;   --size:6px; animation-delay:400ms;"></span>
+        <span class="brillito" style="--bx:11vmin;  --by:8vmin;   --size:4px; animation-delay:460ms;"></span>
+        <span class="brillito" style="--bx:-19vmin; --by:2vmin;   --size:3px; animation-delay:520ms;"></span>
+        <span class="brillito" style="--bx:18vmin;  --by:-4vmin;  --size:5px; animation-delay:580ms;"></span>
+        <span class="brillito" style="--bx:2vmin;   --by:-22vmin; --size:4px; animation-delay:640ms;"></span>
+        <span class="brillito" style="--bx:-4vmin;  --by:12vmin;  --size:3px; animation-delay:700ms;"></span>
+      </div>
     </div>
   </div>
+
 
   <!-- ============================================================
        PASO 2: LA INVITACIÓN COMPLETA
@@ -43,26 +60,29 @@
     </div>
 
     <div class="invitacion-contenido">
-      <div class="orla">
-        <svg viewBox="0 0 24 24"><path d="M12 2c-3 3-3 7 0 10-3 3-3 7 0 10 3-3 3-7 0-10 3-3 3-7 0-10z"/></svg>
+      
+     
+   <div class="hoja" style="background-image: url(imagenes/hojaAntiguaH.svg)">
+        <div class="hoja-texto">
+
+        <p class="kicker">Nos casamos</p>
+        <h1 class="nombres">Caro &amp; Facu</h1>
+
+        <p class="parrafo">
+          Con mucha alegría queremos invitarte a celebrar junto a nosotros
+          el día en que unimos nuestras vidas para siempre. Tu presencia
+          es el regalo más grande que podemos recibir.
+        </p>
+        
+        </div>
       </div>
-
-      <p class="kicker">Nos casamos</p>
-      <h1 class="nombres">Caro &amp; Facu</h1>
-
-      <p class="fecha-grande">21 de Noviembre, 2026</p>
-      <p class="lugar-corto">Nawan Hotel Serrano — Sinsacate</p>
-
-      <p class="parrafo">
-        Con mucha alegría queremos invitarte a celebrar junto a nosotros
-        el día en que unimos nuestras vidas para siempre. Tu presencia
-        es el regalo más grande que podemos recibir.
-      </p>
-
       <div class="divisor">
         <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.1 2.2 4 6 4c2 0 3.6 1.2 4.4 2.9C11.2 5.2 12.8 4 14.8 4c3.8 0 5.6 4.1 4 7.7C19.5 16.4 12 21 12 21z"/></svg>
       </div>
-
+      <div class="fecha-grande">
+        <p class="dia">Sábado 21 de Noviembre</p>
+        <p class="hora">18:00 hs</p>
+      </div>
       <div class="cuenta-regresiva" id="cuentaRegresiva">
         <div class="cr-item"><div class="cr-num" id="crDias">00</div><div class="cr-label">días</div></div>
         <div class="cr-item"><div class="cr-num" id="crHoras">00</div><div class="cr-label">horas</div></div>
@@ -72,20 +92,33 @@
 
       <div class="detalles">
         <div class="detalle">
+          <h3>Recepción</h3>
+          <p>18:00 hs</p>
+        </div>
+        <div class="detalle">
           <h3>Ceremonia</h3>
-          <p>17:30 hs</p>
-          <p>Nawan Hotel Serrano</p>
+          <p>18:30 hs</p>
+        </div>
+        <div class="detalle">
+          <h3>Cena</h3>
+          <p>20:00 hs</p>
         </div>
         <div class="detalle">
           <h3>Fiesta</h3>
-          <p>20:00 hs</p>
-          <p>Nawan Hotel Serrano</p>
+          <p>21:30 hs</p>
         </div>
       </div>
-
-      <!-- Un solo mapa, porque ceremonia y fiesta son en el mismo lugar.
-           EDITAR ACÁ: si en algún momento son lugares distintos, volvemos
-           a poner un mapa por tarjeta. -->
+     <div class="parrafo">
+        <p>
+          La ceremonia y la fiesta se realizarán en el mismo lugar, por lo que
+          no será necesario trasladarse. Te esperamos con mucha alegría para
+          compartir este día tan especial.
+        </p>
+      </div>
+      <div class="lugar">
+        <h3>Lugar</h3>
+        <p>Nawan Hotel Serrano, Sinsacate, Córdoba</p>
+      <!-- Un solo mapa, porque ceremonia y fiesta son en el mismo lugar. -->
       <a class="mapa-ubicacion" href="https://www.google.com/maps/search/?api=1&query=Nawan+Hotel+Serrano+Sinsacate" target="_blank" rel="noopener" aria-label="Ver ubicación en Google Maps">
         <iframe src="https://www.google.com/maps?q=Nawan+Hotel+Serrano+Sinsacate&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa - Nawan Hotel Serrano"></iframe>
         <span class="mapa-etiqueta">Ver en Google Maps</span>
@@ -95,8 +128,39 @@
         <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.1 2.2 4 6 4c2 0 3.6 1.2 4.4 2.9C11.2 5.2 12.8 4 14.8 4c3.8 0 5.6 4.1 4 7.7C19.5 16.4 12 21 12 21z"/></svg>
       </div>
 
+      <div class="vestimenta">
+        <h3>Vestimenta</h3>
+        <p> • FORMAL • ELEGANTE •</p>
+        <P> Queremos que te sientas especial, así que no dudes en lucir tu mejor atuendo.</P>
+      </div>
+      <div class="codigo">
+        <h3> <strong>DRESS CODE</strong> </h3>
+        <div class="codigo-detalle">
+         <div class="codigoEllos">
+          <h4> • ELLOS •</h4>
+          <P> Traje con corbata</P>
+          <p> Zapatos de vestir</p>
+         </div>
+         
+          <img class="codigo-img" src="imagenes/dressCode.svg" alt="Código de vestimenta para ellos: traje con corbata y zapatos de vestir">
+         <div class="codigoEllas">
+            <h4> • ELLAS •</h4>
+            <p> Vestido largo</p>
+            <p> Zapatos de tacón</p>
+         </div>
+        </div>
+        <div class="colores-prohibidos">
+          <p> <strong>IMPORTANTE:</strong> Te pedimos encarecidamente evitar el uso de los siguientes colores:</p>
+
+          <div class="color-prohibido" style="background-color: #FFFFFF;"><div class="color-nombre"></div></div>
+          <div class="color-prohibido" style="background-color: #000000;"><div class="color-nombre"></div></div>
+          <div class="color-prohibido" style="background-color: #7c0202;"><div class="color-nombre"></div></div>
+          <div class="color-prohibido" style="background-color: #c9a35d;"><div class="color-nombre"></div></div>
+      </div>
+
+    
       <div class="rsvp">
-        <p>Por favor confirmá tu asistencia antes del 5 de Octubre</p>
+        <p>Por favor confirmá tu asistencia antes del 10 de Noviembre</p>
         <a class="boton-rsvp" href="https://wa.me/5493511234567?text=%C2%A1Hola!%20Confirmo%20mi%20asistencia%20a%20la%20boda" target="_blank" rel="noopener">Confirmar asistencia</a>
       </div>
 

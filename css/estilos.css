@@ -1,7 +1,4 @@
-/* ============ TOKENS =================
-   EDITAR ACÁ: colores, y las variables del sobre más abajo.
-   Nombres/fecha/lugar están en index.html.
-=========================================== */
+
 :root{
   --bordo:        #6d1b35;
   --bordo-oscuro: #4c1225;
@@ -14,9 +11,18 @@
   --serif: 'Cormorant Garamond', 'Georgia', serif;
   --script: 'Parisienne', cursive;
 
- 
+  /* ---- EDITAR ACÁ: ajustes del sobre ----
+     --sobre-ratio: el ancho/alto EXACTO del viewBox de tu sobre.svg
+       (mirá en Figma las medidas de tu artboard, ej: si es 900x1200,
+       poné 900/1200). Si esto no coincide con tu archivo real, el
+       sobre igual va a ocupar toda la pantalla, pero el sello puede
+       quedar un poco desplazado del punto exacto donde se cruzan
+       las solapas.
+     --sello-ancho / --sello-top: tamaño y posición del sello, en %
+       del sobre (no de la pantalla).
+  */
   --sobre-ratio: 3 / 4;
-  --sello-ancho: 22%;
+  --sello-ancho: 10%;
   --sello-top: 56%;
 }
 
@@ -36,11 +42,13 @@ html, body{
   *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
-
+/* ======================================================
+   SOBRE — pantalla completa en cualquier dispositivo.
+====================================================== */
 .escena{
   position: fixed;
   inset: 0;
-  background: var(--bordo-oscuro);
+  background:#ede3d3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,27 +61,31 @@ html, body{
   aspect-ratio: var(--sobre-ratio);
   width: 100%;
   height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  /* esta combinación es la que "contiene" la imagen sin recortarla,
-     sea cual sea la proporción de la pantalla */
 }
 .sobre:focus-visible{ outline: 3px solid var(--oro); outline-offset: -6px; }
 
+/* Las dos imágenes del sobre (cerrado / abierto) apiladas exactamente
+   en el mismo lugar. Se van cruzando (crossfade) cuando se abre. */
 .sobre-img{
   position:absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   display: block;
-  transition: opacity .7s ease .4s, transform .7s ease .4s;
 }
-
-.sobre.abierto{ pointer-events:none; }
-.sobre.abierto .sobre-img{
+.sobre-cerrado{
+  opacity: 1;
+  z-index: 1;
+  transition: opacity .5s ease .15s;
+}
+.sobre-abierto{
   opacity: 0;
-  transform: scale(1.05);
+  z-index: 1;
+  transition: opacity .6s ease .35s;
 }
+.sobre.abierto{ pointer-events:none; }
+.sobre.abierto .sobre-cerrado{ opacity: 0; }
+.sobre.abierto .sobre-abierto{ opacity: 1; }
 
 .sello-wrap{
   position:absolute;
@@ -104,10 +116,8 @@ html, body{
 .sobre.abierto .sello-der{ transform: translate(65%,-18%) rotate(24deg); opacity:0; }
 
 /* ---- Luz mágica: un brillo breve, tipo reloj de arena, que se filtra
-   por la línea del sobre al abrirse (nada de chispitas ni estrellitas,
-   solo luz suave y difusa). Usa la MISMA var(--sello-top), así el
-   brillo siempre nace justo del punto donde está el sello. ---- */
-
+   por la línea del sobre al abrirse. Usa la MISMA var(--sello-top),
+   así el brillo siempre nace justo del punto donde está el sello. ---- */
 .luz-arriba, .luz-abajo{
   position:absolute;
   left:0; right:0;
@@ -134,7 +144,7 @@ html, body{
   width: 12vmin; height: 12vmin;
   transform: translate(-50%,-50%) scale(0);
   border-radius: 50%;
-  background: radial-gradient(circle, lch(54.47% 57.44 324.24) 0%, #ee97d8 40%, transparent 72%);
+  background: radial-gradient(circle, #d94fb8 0%, #ee97d8 40%, transparent 72%);
   filter: blur(4px);
   opacity: 0;
   z-index: 4;
@@ -156,6 +166,58 @@ html, body{
 .sobre.abierto .luz-arriba,
 .sobre.abierto .luz-abajo{ animation: luz-flash 1200ms ease-out forwards; }
 .sobre.abierto .luz-nucleo{ animation: nucleo-flash 1200ms ease-out forwards; }
+
+/* ---- Collage que SUBE desde adentro del sobre: nace escondido y
+   abajo (como si estuviera adentro del bolsillo), y sube creciendo
+   hasta asomar del todo, con un leve rebote al final. ---- */
+.collage{
+  position:absolute;
+  left:50%; top: var(--sello-top);
+  width: min(78%, 480px);
+  transform: translate(-50%, 55%) scale(.2) rotate(-8deg);
+  opacity: 0;
+  z-index: 6;
+  pointer-events: none;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,.4));
+}
+@keyframes collage-salida{
+  0%   { opacity: 0; transform: translate(-50%, 55%)  scale(.2)  rotate(-8deg); }
+  40%  { opacity: 1; transform: translate(-50%, 10%)  scale(.65) rotate(-3deg); }
+  70%  { opacity: 1; transform: translate(-50%,-55%)  scale(1.06) rotate(1deg); }
+  100% { opacity: 1; transform: translate(-50%,-50%)  scale(1)   rotate(0deg); }
+}
+.sobre.abierto .collage{
+  animation: collage-salida 1000ms cubic-bezier(.25,.7,.3,1) 280ms forwards;
+}
+
+/* ---- Brillitos chiquitos y delicados alrededor del collage mientras
+   sube — nada de estrellitas grandes ni destellos que salen disparados,
+   solo puntitos suaves de luz que titilan (como polvo mágico). ---- */
+.brillitos{
+  position:absolute;
+  left:50%; top: var(--sello-top);
+  width:0; height:0;
+  z-index: 7;
+  pointer-events:none;
+}
+.brillito{
+  position:absolute;
+  left:0; top:0;
+  width: var(--size, 5px);
+  height: var(--size, 5px);
+  margin: calc(var(--size, 5px) / -2) 0 0 calc(var(--size, 5px) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffdf5 0%, rgba(255,240,214,.65) 55%, transparent 100%);
+  filter: blur(.6px);
+  opacity: 0;
+}
+@keyframes brillito-titilar{
+  0%   { opacity: 0; transform: translate(var(--bx,0), var(--by,0)) scale(.3); }
+  35%  { opacity: 1; transform: translate(var(--bx,0), var(--by,0)) scale(1); }
+  70%  { opacity: .85; transform: translate(var(--bx,0), var(--by,0)) scale(.8); }
+  100% { opacity: 0; transform: translate(var(--bx,0), var(--by,0)) scale(.4); }
+}
+.sobre.abierto .brillito{ animation: brillito-titilar 850ms ease-in-out forwards; }
 
 /* ======================================================
    INVITACIÓN COMPLETA
@@ -182,7 +244,7 @@ html, body{
 .invitacion-contenido{
   max-width: 640px;
   margin: 0 auto;
-  padding: 64px 24px 96px;
+  padding: 14px 24px 96px;
   text-align:center;
 }
 
@@ -212,8 +274,9 @@ html, body{
 .orla{ width: 46px; height:46px; margin: 0 auto 18px; }
 .orla svg path{ fill:none; stroke: var(--oro); stroke-width: 1.4; }
 
-.kicker{ font-style: italic; letter-spacing: 0.04em; color: var(--tinta-suave); font-size: 1.05rem; margin: 4px 0 2px; }
-
+.kicker{ font-style: italic; letter-spacing: 0.04em; color: var(--bordo); font-size: 1.05rem; margin: 4px 0 2px; }
+.hoja{ align-items: center; justify-content: center; display: flex; flex-direction: column;  background-size: cover; background-position: center; padding: 0 2px;  width: 100%;
+  min-height: 100vh;  }
 .nombres{
   font-family: var(--script);
   color: var(--bordo);
@@ -222,8 +285,8 @@ html, body{
   margin: 6px 0 18px;
 }
 
-.fecha-grande{ font-size: clamp(1.3rem, 4vw, 1.7rem); letter-spacing: 0.08em; margin-bottom: 6px; }
-.lugar-corto{ color: var(--tinta-suave); font-style: italic; margin-bottom: 40px; }
+.fecha-grande{ font-size: clamp(1.5rem, 6vw, 2.2rem); letter-spacing: 0.08em; margin-bottom: 6px; color: var(--bordo) }
+.lugar-corto{ color: var(--bordo); font-style: italic; margin-bottom: 40px; }
 
 .divisor{ display:flex; align-items:center; gap: 14px; max-width: 260px; margin: 40px auto; color: var(--oro); }
 .divisor::before, .divisor::after{ content:""; flex:1; height:1px; background: linear-gradient(to right, transparent, var(--oro), transparent); }
@@ -235,7 +298,7 @@ html, body{
 .cr-num{ font-size: clamp(1.8rem, 5vw, 2.4rem); color: var(--bordo); font-weight: 600; }
 .cr-label{ font-size: 0.8rem; letter-spacing: 0.08em; color: var(--tinta-suave); font-style: italic; }
 
-.detalles{ display:grid; gap: 28px; margin: 44px 0; }
+.detalles{ display:grid; gap: 28px; margin: 44px 0; background-image: url(imagenes/hojaAntigua.svg); }
 @media (min-width: 560px){ .detalles{ grid-template-columns: 1fr 1fr;  } }
 .detalle h3{ font-family: var(--serif); font-style: italic; font-weight: 500; color: var(--bordo); font-size: 1.3rem; margin: 0 0 6px; }
 .detalle p{ margin: 2px 0; color: var(--tinta); line-height: 1.5; }
@@ -276,9 +339,16 @@ html, body{
 }
 
 .parrafo{ max-width: 440px; margin: 0 auto 8px; line-height: 1.7; font-size: 1.08rem; }
+.codigo{ display:flex; justify-content:center; gap: 18px; flex-wrap: wrap; margin: 24px 0 40px;  align-items: center;}
+.codigo-detalle{ display:flex;  align-items: center; justify-content: center;}
+.codigo-img{ max-width: 39%; height: auto; margin: 12px 0; }
+.colores-prohibidos{ display: flex; justify-content: center; gap: 12px; margin: 24px 0; flex-direction: column; align-items: center;}
+.color-prohibido{ width: 28px; height: 28px; border-radius: 15%;justify-content: center; align-items: center; display: flex; }
+.color-nombre{ font-size: 0.8rem; color: var(--tinta-suave); text-align: center; }
 
+.boton-rsvp{ margin-top: 48px; }
 .rsvp{ margin-top: 48px; }
-.rsvp p{ color: var(--tinta-suave); font-style: italic; margin-bottom: 18px; }
+.rsvp p{ color: var(--tinta-suave); font-style: italic; margin-bottom: 18px; font-size: 1.4rem;}
 .boton-rsvp{
   display:inline-block;
   font-family: var(--serif);

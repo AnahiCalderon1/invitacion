@@ -1,10 +1,11 @@
 // EDITAR ACÁ: fecha y hora exacta del casamiento
 const FECHA_BODA = new Date(2026, 10, 21, 17, 30, 0);
 
-// cuánto dura la animación de apertura (sello rompiéndose + chispas + fade
-// del sobre) antes de mostrar la invitación completa. Si alargás o acortás
-// esas animaciones en estilos.css, ajustá este número para que combinen.
-const DURACION_APERTURA = 750;
+// cuánto dura la animación de apertura (sello rompiéndose + luz + crossfade
+// a la imagen del sobre abierto + el collage saliendo) antes de mostrar la
+// invitación completa. Si alargás o acortás esas animaciones en
+// estilos.css, ajustá este número para que combinen.
+const DURACION_APERTURA = 2800;
 
 const sobre      = document.getElementById('sobre');
 const invitacion = document.getElementById('invitacion');
