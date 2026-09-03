@@ -27,7 +27,7 @@
 }
 @media (max-width: 480px){
   :root{
-    --sello-ancho: 16%;
+    --sello-ancho: 20%;
   }
 }
 
@@ -451,14 +451,14 @@ html, body{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px 22px;
-  max-width: 460px;
+  max-width: 280px;
   margin: 32px auto 8px;
 }
 .color-restringido .color-item{
-  width: 139px;
+  width: 89px;
 }
 @media (max-width: 380px){
-  .paleta-colores{ grid-template-columns: repeat(2, 1fr); max-width: 300px; }
+  .paleta-colores{ grid-template-columns: repeat(2, 1fr); max-width: 180px; }
 }
 
 .color-item{
@@ -567,5 +567,45 @@ html, body{
   transition: background .25s ease, transform .25s ease;
 }
 .boton-rsvp:hover{ background: var(--bordo-oscuro); transform: translateY(-1px); }
+.regalo{
+  margin-top: 44px;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.regalo-poema{
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--tinta-suave);
+  line-height: 1.75;
+  font-size: 1rem;
+  margin: 0 0 16px;
+}
+
+.regalo-monto{
+  font-family: var(--serif);
+  color: var(--bordo);
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  margin: 0 0 16px;
+}
+
+.regalo-link{
+  display: inline-block;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--bordo);
+  border: 1px solid var(--oro);
+  padding: 9px 24px;
+  border-radius: 24px;
+  text-decoration: none;
+  transition: background .25s ease, color .25s ease;
+}
+.regalo-link:hover{
+  background: var(--oro);
+  color: var(--papel);
+}
 
 .firma{ margin-top: 60px; font-family: var(--script); color: var(--oro); font-size: 1.6rem; }
