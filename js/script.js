@@ -10,7 +10,13 @@ const DURACION_APERTURA = 2800;
 const sobre      = document.getElementById('sobre');
 const invitacion = document.getElementById('invitacion');
 const btnCerrar  = document.getElementById('btnCerrar');
-
+const eventos = document.querySelectorAll('.evento');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.3 });
+eventos.forEach(ev => obs.observe(ev));
 let abierto = false;
 
 function abrirSobre(){
