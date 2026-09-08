@@ -5,7 +5,7 @@ const FECHA_BODA = new Date(2026, 10, 21, 17, 30, 0);
 // a la imagen del sobre abierto + el collage saliendo) antes de mostrar la
 // invitación completa. Si alargás o acortás esas animaciones en
 // estilos.css, ajustá este número para que combinen.
-const DURACION_APERTURA = 2800;
+const DURACION_APERTURA = 800;
 
 const sobre      = document.getElementById('sobre');
 const invitacion = document.getElementById('invitacion');

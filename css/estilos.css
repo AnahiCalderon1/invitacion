@@ -7,6 +7,7 @@
   --tinta:        #3a1220;
   --tinta-suave:  #7a5a63;
   --fondo:        #ede3d3;
+  --negro:        #000000;
 
   --serif: 'Cormorant Garamond', 'Georgia', serif;
   --script: 'Parisienne', cursive;
@@ -120,57 +121,6 @@ html, body{
 .sobre.abierto .sello-izq{ transform: translate(-65%,-18%) rotate(-24deg); opacity:0; }
 .sobre.abierto .sello-der{ transform: translate(65%,-18%) rotate(24deg); opacity:0; }
 
-/* ---- Luz mágica: un brillo breve, tipo reloj de arena, que se filtra
-   por la línea del sobre al abrirse. Usa la MISMA var(--sello-top),
-   así el brillo siempre nace justo del punto donde está el sello. ---- */
-.luz-arriba, .luz-abajo{
-  position:absolute;
-  left:0; right:0;
-  opacity:0;
-  pointer-events:none;
-  z-index: 3;
-  filter: blur(7px);
-}
-.luz-arriba{
-  top:0;
-  height: var(--sello-top);
-  clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
-  background: linear-gradient(to top, rgba(231, 148, 220, 0.95) 0%, rgba(255,214,214,.35) 55%, transparent 100%);
-}
-.luz-abajo{
-  top: var(--sello-top);
-  bottom:0;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  background: linear-gradient(to bottom, rgba(231, 151, 198, 0.95) 0%, rgba(255,214,214,.35) 55%, transparent 100%);
-}
-.luz-nucleo{
-  position:absolute;
-  left:50%; top: var(--sello-top);
-  width: 12vmin; height: 12vmin;
-  transform: translate(-50%,-50%) scale(0);
-  border-radius: 50%;
-  background: radial-gradient(circle, #d94fb8 0%, #ee97d8 40%, transparent 72%);
-  filter: blur(4px);
-  opacity: 0;
-  z-index: 4;
-  pointer-events:none;
-}
-
-@keyframes luz-flash{
-  0%   { opacity: 0; }
-  22%  { opacity: 1; }
-  65%  { opacity: .8; }
-  100% { opacity: 0; }
-}
-@keyframes nucleo-flash{
-  0%   { opacity: 0; transform: translate(-50%,-50%) scale(.2); }
-  25%  { opacity: 1; transform: translate(-50%,-50%) scale(1); }
-  100% { opacity: 0; transform: translate(-50%,-50%) scale(1.6); }
-}
-
-.sobre.abierto .luz-arriba,
-.sobre.abierto .luz-abajo{ animation: luz-flash 1200ms ease-out forwards; }
-.sobre.abierto .luz-nucleo{ animation: nucleo-flash 1200ms ease-out forwards; }
 
 /* ---- Collage que SUBE desde adentro del sobre: nace escondido y
    abajo (como si estuviera adentro del bolsillo), y sube creciendo
@@ -185,15 +135,7 @@ html, body{
   pointer-events: none;
   filter: drop-shadow(0 12px 24px rgba(0,0,0,.4));
 }
-@keyframes collage-salida{
-  0%   { opacity: 0; transform: translate(-50%, 55%)  scale(.2)  rotate(-8deg); }
-  40%  { opacity: 1; transform: translate(-50%, 10%)  scale(.65) rotate(-3deg); }
-  70%  { opacity: 1; transform: translate(-50%,-55%)  scale(1.06) rotate(1deg); }
-  100% { opacity: 1; transform: translate(-50%,-50%)  scale(1)   rotate(0deg); }
-}
-.sobre.abierto .collage{
-  animation: collage-salida 1000ms cubic-bezier(.25,.7,.3,1) 280ms forwards;
-}
+
 
 /* ---- Brillitos chiquitos y delicados alrededor del collage mientras
    sube — nada de estrellitas grandes ni destellos que salen disparados,
@@ -249,7 +191,7 @@ html, body{
 .invitacion-contenido{
   max-width: 640px;
   margin: 0 auto;
-  padding: 14px 24px 96px;
+  padding: 0 24px 96px; 
   text-align:center;
 }
 
@@ -279,9 +221,47 @@ html, body{
 .orla{ width: 46px; height:46px; margin: 0 auto 18px; }
 .orla svg path{ fill:none; stroke: var(--oro); stroke-width: 1.4; }
 
-.kicker{ font-style: italic; letter-spacing: 0.04em; color: var(--bordo); font-size: 1.05rem; margin: 4px 0 2px; }
-.hoja{ align-items: center; justify-content: center; display: flex; flex-direction: column;  background-size: cover; background-position: center; padding: 0 2px;  width: 100%;
-  }
+.kicker{ font-style: italic; letter-spacing: 0.04em; color: var(--negro); font-size: 1.05rem; margin: 4px 0 2px; }
+/*Invitacion primera parte*/
+.hoja{
+  background-image: url('../imagenes/caroyfacu.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+filter: grayscale(1) contrast(1.05);
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+
+  min-height: 80svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px 48px;
+  position: relative;
+}
+
+.hoja::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+    rgba(0,0,0,.6) 0%,
+    rgba(0,0,0,.2) 45%,
+    transparent 70%);
+}
+
+.hoja .kicker,
+.hoja .nombres{
+  position: relative;
+  z-index: 1;
+  color: var(--papel);
+}
+
+.hoja .kicker{
+  opacity: .9;
+}
 .nombres{
   font-family: var(--script);
   color: var(--bordo);
@@ -290,8 +270,73 @@ html, body{
   margin: 6px 0 18px;
 }
 
-.fecha-grande{ font-size: clamp(1.5rem, 6vw, 2.2rem); letter-spacing: 0.08em; margin-bottom: 6px; color: var(--bordo) }
-.lugar-corto{ color: var(--bordo); font-style: italic; margin-bottom: 40px; }
+/* Fecha dentro del marco decorativo */
+.marco-fecha{
+  position: relative;
+  width: 100%;
+  max-width: 200px;   /* achicá o agrandá acá si querés más chico/grande */
+  margin: 0 auto 40px;
+}
+.marco-fecha-img{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.marco-fecha-texto{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 26% 16% 14%;  /* el padding-top más grande deja lugar al moño del marco */
+  text-align: center;
+}
+.marco-fecha-dia{
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--negro);
+  font-size: 1.2rem;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+.marco-fecha-hora{
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--tinta-suave);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.fecha-deco{
+  position: relative;
+  width: 100%;
+  max-width: clamp(170px, 48vw, 230px);
+  margin: 56px auto 44px;   /* antes: 0 auto 44px — el 56px arriba le da aire respecto a la foto */
+}
+.fecha-deco .marco-fecha{
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  filter: drop-shadow(0 8px 18px rgba(58,18,32,.16));  /* sombra suave debajo del marco entero */
+}
+.sobre-sello-deco{
+  position: absolute;
+  top: 2%;
+  right: -9%;
+  width: clamp(64px, 30%, 108px);
+  height: auto;
+  display: block;
+  transform: rotate(-8deg);
+  filter: drop-shadow(0 4px 8px rgba(58,18,32,.22));
+  z-index: 2;
+}
+
+.lugar-corto{ color: var(--negro); font-style: italic; margin-bottom: 40px; }
 
 .divisor{ display:flex; align-items:center; gap: 14px; max-width: 260px; margin: 40px auto; color: var(--oro); }
 .divisor::before, .divisor::after{ content:""; flex:1; height:1px; background: linear-gradient(to right, transparent, var(--oro), transparent); }
@@ -300,12 +345,12 @@ html, body{
 
 .cuenta-regresiva{ display:flex; justify-content:center; gap: clamp(10px, 4vw, 26px); margin: 8px 0 44px; flex-wrap: wrap; }
 .cr-item{ min-width: 64px; }
-.cr-num{ font-size: clamp(1.8rem, 5vw, 2.4rem); color: var(--bordo); font-weight: 600; }
+.cr-num{ font-size: clamp(1.8rem, 5vw, 2.4rem); color: var(--negro); font-weight: 600; }
 .cr-label{ font-size: 0.8rem; letter-spacing: 0.08em; color: var(--tinta-suave); font-style: italic; }
 
 .detalles{ display:grid; gap: 28px; margin: 44px 0;  }
 @media (min-width: 560px){ .detalles{ grid-template-columns: 1fr 1fr;  } }
-.detalle h3{ font-family: var(--serif); font-style: italic; font-weight: 500; color: var(--bordo); font-size: 1.3rem; margin: 0 0 6px; }
+.detalle h3{ font-family: var(--serif); font-style: italic; font-weight: 500; color: var(--negro); font-size: 1.3rem; margin: 0 0 6px; }
 .detalle p{ margin: 2px 0; color: var(--tinta); line-height: 1.5; }
 .detalle a{ color: var(--tinta-suave); text-decoration: underline; }
 
@@ -314,7 +359,7 @@ html, body{
 
 .programa-titulo{
   font-family: var(--script);
-  color: var(--bordo);
+  color: var(--negro);
   font-size: clamp(2rem, 6vw, 2.6rem);
   margin-bottom: 44px;
 }
@@ -387,7 +432,7 @@ html, body{
   font-family: var(--serif);
   font-style: italic;
   font-weight: 500;
-  color: var(--bordo);
+  color: var(--negro);
   font-size: 1.15rem;
   margin: 0 0 2px;
 }
@@ -445,7 +490,7 @@ html, body{
 /*Dress Code*/
 .colores-prohibidos{ margin: 24px 0 8px; }
 .colores-prohibidos p{ max-width: 460px; margin: 0 auto 10px; line-height: 1.6; font-size: 1.08rem; color: var(--tinta); }
-.colores-prohibidos p strong{ color: var(--bordo); font-weight: 500; }
+.colores-prohibidos p strong{ color: var(--negro); font-weight: 500; }
 
 .paleta-colores{
   display: grid;
@@ -501,7 +546,7 @@ html, body{
   font-weight: 500;
   font-size: 1.05rem;
   letter-spacing: 0.02em;
-  color: var(--bordo);
+  color: var(--negro);
   text-align: center;
   line-height: 1.2;
 }
@@ -543,7 +588,7 @@ html, body{
   left: 50%;
   width: 118%;
   height: 2px;
-  background: var(--bordo);
+  background: var(--negro);
   opacity: .8;
   border-radius: 2px;
 }
@@ -560,7 +605,7 @@ html, body{
   font-style: italic;
   font-size: 1.05rem;
   color: var(--papel);
-  background: var(--bordo);
+  background: var(--negro);
   padding: 13px 34px;
   border-radius: 30px;
   text-decoration:none;
