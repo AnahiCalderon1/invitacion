@@ -5,9 +5,10 @@ const FECHA_BODA = new Date(2026, 10, 21, 17, 30, 0);
 // a la imagen del sobre abierto + el collage saliendo) antes de mostrar la
 // invitación completa. Si alargás o acortás esas animaciones en
 // estilos.css, ajustá este número para que combinen.
-const DURACION_APERTURA = 800;
+const DURACION_APERTURA = 900;
 
 const sobre      = document.getElementById('sobre');
+const sello = document.getElementById('sello');
 const invitacion = document.getElementById('invitacion');
 const btnCerrar  = document.getElementById('btnCerrar');
 const eventos = document.querySelectorAll('.evento');
@@ -54,8 +55,8 @@ function cerrarInvitacion(){
   }, 500);
 }
 
-sobre.addEventListener('click', abrirSobre);
-sobre.addEventListener('keydown', (e) => {
+sello.addEventListener('click', abrirSobre);
+sello.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' '){
     e.preventDefault();
     abrirSobre();

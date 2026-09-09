@@ -14,26 +14,16 @@
 <body>
 
   <!-- ============================================================
-       PASO 1: EL SOBRE — pantalla completa, con imagen de cerrado
-       y de abierto (imagenes/sobreCerrado.svg + sobreAbierto.svg)
+       PASO 1: EL SOBRE — pantalla completa, sobre
   ============================================================= -->
   <div class="escena">
     <div class="sobre" id="sobre" role="button" tabindex="0" aria-label="Abrir invitación">
       <img class="sobre-img sobre-cerrado" src="imagenes/sobreCerrado.svg" alt="">
-      <img class="sobre-img sobre-abierto" src="imagenes/sobreAbierto.svg" alt="">
 
-      <div class="sello-wrap">
-        <img class="sello-mitad sello-izq" src="imagenes/selloCarta.svg" alt="">
-        <img class="sello-mitad sello-der" src="imagenes/selloCarta.svg" alt="">
-      </div>
-
-      <!-- luz mágica -->
-      <div class="luz-arriba" aria-hidden="true"></div>
-      <div class="luz-abajo" aria-hidden="true"></div>
-      <div class="luz-nucleo" aria-hidden="true"></div>
-
-      <!-- collage que sube desde adentro del sobre -->
-      <img class="collage" src="imagenes/collage.svg" alt="">
+  <div class="sello-wrap" id="sello" role="button" tabindex="0" aria-label="Abrir invitación">
+    <img class="sello-mitad sello-izq" src="imagenes/selloCarta.svg" alt="">
+    <img class="sello-mitad sello-der" src="imagenes/selloCarta.svg" alt="">
+  </div>
 
       <!-- brillitos chiquitos y delicados, como polvo mágico, mientras sube -->
       <div class="brillitos" aria-hidden="true">
@@ -145,10 +135,10 @@
         <p class="programa-gracias">Gracias</p>
       </div>
      <div class="parrafo">
+        <img class="parrafo-sello" src="imagenes/selloCarta.svg" alt="">
         <p>
-          La ceremonia y la fiesta se realizarán en el mismo lugar, por lo que
-          no será necesario trasladarse. Te esperamos con mucha alegría para
-          compartir este día tan especial.
+          Tanto la ceremonia como la recepción se llevarán a cabo en el mismo lugar.<br>
+          Será un placer celebrar esta noche junto a ustedes.
         </p>
       </div>
       <div class="programa">
@@ -176,7 +166,7 @@
 
           <h3> <strong>•  ETIQUETA FORMAL  •</strong> </h3>
           
-          <P> Deseamos que te sientas especial, así que no dudes en lucir tu mejor atuendo.</P></div>
+          <P> Deseamos que te sientas especial, así que no dudes en lucir tu mejor outfit.</P></div>
           
         <div class="codigo-detalle">
           <div class="codigoEllos">
@@ -228,7 +218,6 @@
               <p class="restringido-texto">El único color que le pedimos reservar a la novia es</p>
               <div class="color-item">
                 <div class="mancha mancha-prohibida" style="--c:#FFFFFF">
-                  <span class="prohibido-cruz" aria-hidden="true"></span>
                 </div>
                 <p class="color-nombre">Blanco</p>
               </div>
@@ -237,24 +226,35 @@
 
           </div>
       </div>
-      <div class="rsvp">
+     
         <div class="regalo">
           <div class="divisor">
             <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.1 2.2 4 6 4c2 0 3.6 1.2 4.4 2.9C11.2 5.2 12.8 4 14.8 4c3.8 0 5.6 4.1 4 7.7C19.5 16.4 12 21 12 21z"/></svg>
           </div>
+         <div class="regalo-marco">
           <p class="regalo-poema">
-            Nuestro regalo más preciado sos vos, compartiendo este día con nosotros.
-            Por eso, para que puedas tener tu lugar en la mesa, brindar y cenar
-            junto a nosotros, te pedimos un aporte por persona que destinamos
-            íntegramente a hacer de esta noche algo inolvidable.
+            El mejor regalo es tu compañía en nuestro casamiento. La idea es celebrar y compartir con nuestra gente más cercana en este día tan importante para nosotros. Por eso, con el abono de tu tarjeta es más que suficiente para nosotros.
           </p>
-          <p class="regalo-monto">$200.000 por persona</p>
-          <a class="regalo-link" href="https://www.mercadopago.com.ar/payment-link/v1/go?link-id=51ada40d-a1e6-49f5-814a-daeb59c40e0a&router-request-id=abfe3ab5-a992-4ebc-8c16-ba795c7124c3" target="_blank" rel="noopener">Abonar vía Mercado Pago</a>
-        </div>
-        <p>Por favor confirmá tu asistencia antes del 10 de Noviembre</p>
+          <p class="regalo-monto">El siguiente botón te direccionara al link de pago: LINK DE MERCADO PAGO X $180.000</p>
+          <img class="regalo-marco-sello" src="imagenes/selloCarta.svg" alt="">
+        </div> <a class="regalo-link" href="https://www.mercadopago.com.ar/payment-link/v1/go?link-id=51ada40d-a1e6-49f5-814a-daeb59c40e0a&router-request-id=abfe3ab5-a992-4ebc-8c16-ba795c7124c3" target="_blank" rel="noopener">Abonar vía Mercado Pago</a>
+        <div class="regalo-marco">
+          <p class="regalo-poema">
+            Si, de cualquier manera, queres tener un detalle con nosotros,
+             el link de pago que te direcciona a continuación, podrás optar con tu aporte.
+              LINK DE MERCADO PAGO MONTO LIBRE 
+          </p>
+          <p class="regalo-monto">El siguiente botón te direccionara al link de mercado pago</p>
+          <img class="regalo-marco-sello" src="imagenes/selloCarta.svg" alt="">
+        </div> <a class="regalo-link" href="https://www.mercadopago.com.ar/payment-link/v1/go?link-id=51ada40d-a1e6-49f5-814a-daeb59c40e0a&router-request-id=abfe3ab5-a992-4ebc-8c16-ba795c7124c3" target="_blank" rel="noopener">Regalo vía Mercado Pago</a>
+        
+        
+      </div>
+      
+        <p>Tenés tiempo de confirmar tu asistencia hasta el 10 de noviembre. No te demores!</p>
           <a class="boton-rsvp" href="https://wa.me/5493518566732?text=%C2%A1Hola!%20Quiero%20confirmar%20mi%20asistencia%20a%20la%20boda.%0A%0A%E2%9C%8F%EF%B8%8F%20Mi%20nombre:%20%0A%F0%9F%A4%9D%20Acompa%C3%B1ante%20(si%20tengo%20%2B1):%20%0A%0A%F0%9F%93%83%20A%20continuaci%C3%B3n%20env%C3%ADo%20el%20comprobante%20de%20pago.%20En%20caso%20de%20ir%20con%20%2B1,%20env%C3%ADo%20el%20comprobante%20de%20cada%20invitaci%C3%B3n." target="_blank" rel="noopener">Confirmar asistencia</a>      </div>
       <p class="firma">Los esperamos con amor</p>
-    
+     
   </div>
 
 <script src="js/script.js" defer></script>

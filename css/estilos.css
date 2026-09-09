@@ -23,8 +23,8 @@
        del sobre (no de la pantalla).
   */
   --sobre-ratio: 3 / 4;
-  --sello-ancho: 10%;
-  --sello-top: 56%;
+  --sello-ancho: 8%;
+  --sello-top: 43%;
 }
 @media (max-width: 480px){
   :root{
@@ -54,45 +54,34 @@ html, body{
 .escena{
   position: fixed;
   inset: 0;
-  background:#ede3d3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--bordo-oscuro);
   overflow: hidden;
 }
 
 .sobre{
-  position: relative;
-  cursor: pointer;
-  aspect-ratio: var(--sobre-ratio);
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
 }
-.sobre:focus-visible{ outline: 3px solid var(--oro); outline-offset: -6px; }
 
-/* Las dos imágenes del sobre (cerrado / abierto) apiladas exactamente
-   en el mismo lugar. Se van cruzando (crossfade) cuando se abre. */
 .sobre-img{
-  position:absolute;
+  position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: cover;      /* llena toda la pantalla, recorta sobrante */
+  object-position: center;
 }
+
 .sobre-cerrado{
   opacity: 1;
-  z-index: 1;
-  transition: opacity .5s ease .15s;
+  transition: opacity .4s ease .3s;
 }
-.sobre-abierto{
+.sobre.abierto .sobre-cerrado{
   opacity: 0;
-  z-index: 1;
-  transition: opacity .6s ease .35s;
 }
-.sobre.abierto{ pointer-events:none; }
-.sobre.abierto .sobre-cerrado{ opacity: 0; }
-.sobre.abierto .sobre-abierto{ opacity: 1; }
-
 .sello-wrap{
   position:absolute;
   left:50%;
@@ -100,42 +89,26 @@ html, body{
   width: var(--sello-ancho);
   aspect-ratio: 1;
   transform: translate(-50%,-50%);
-  transition: transform .8s ease;
+  transition: transform .9s cubic-bezier(.4,0,.2,1);
   filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
+  cursor: pointer;
   z-index: 5;
 }
-.sobre:hover .sello-wrap{ transform: translate(-50%,-50%) scale(1.05); }
+.sello-wrap:hover{ transform: translate(-50%,-50%) scale(1.06); }
 
 .sello-mitad{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
-  transition: transform .55s cubic-bezier(.3,.6,.3,1), opacity .55s ease;
 }
-/* cada mitad muestra solo su lado del sello; juntas arman el círculo entero */
 .sello-izq{ clip-path: inset(0 50% 0 0); }
 .sello-der{ clip-path: inset(0 0 0 50%); }
 
-/* al abrir, el sello se "rompe" en dos y las mitades vuelan hacia los costados */
-.sobre.abierto .sello-izq{ transform: translate(-65%,-18%) rotate(-24deg); opacity:0; }
-.sobre.abierto .sello-der{ transform: translate(65%,-18%) rotate(24deg); opacity:0; }
-
-
-/* ---- Collage que SUBE desde adentro del sobre: nace escondido y
-   abajo (como si estuviera adentro del bolsillo), y sube creciendo
-   hasta asomar del todo, con un leve rebote al final. ---- */
-.collage{
-  position:absolute;
-  left:50%; top: var(--sello-top);
-  width: min(78%, 480px);
-  transform: translate(-50%, 55%) scale(.2) rotate(-8deg);
-  opacity: 0;
-  z-index: 6;
-  pointer-events: none;
-  filter: drop-shadow(0 12px 24px rgba(0,0,0,.4));
+/* al tocar el sello: crece hasta tapar toda la pantalla */
+.sobre.abierto .sello-wrap{
+  transform: translate(-50%,-50%) scale(40);
 }
-
 
 /* ---- Brillitos chiquitos y delicados alrededor del collage mientras
    sube — nada de estrellitas grandes ni destellos que salen disparados,
@@ -199,7 +172,7 @@ html, body{
   position: sticky;
   top: 18px;
   display:flex;
-  justify-content:flex-end;
+  justify-content:flex-start;
   max-width: 640px;
   padding: 0 24px;
   margin: 0 auto;
@@ -216,7 +189,7 @@ html, body{
   cursor: pointer;
   transition: all .25s ease;
 }
-.cerrar button:hover{ border-color: var(--bordo); color: var(--bordo); }
+.cerrar button:hover{ border-color: var(--oro); color: var(--oro); }
 
 .orla{ width: 46px; height:46px; margin: 0 auto 18px; }
 .orla svg path{ fill:none; stroke: var(--oro); stroke-width: 1.4; }
@@ -230,7 +203,7 @@ html, body{
   background-repeat: no-repeat;
 filter: grayscale(1) contrast(1.05);
   width: 100%;
-  border-radius: 18px;
+  border-radius: 4px;
   overflow: hidden;
 
   min-height: 80svh;
@@ -344,8 +317,8 @@ filter: grayscale(1) contrast(1.05);
 }
 .lugar-corto{ color: var(--negro); font-style: italic; margin-bottom: 40px; }
 
-.divisor{ display:flex; align-items:center; gap: 14px; max-width: 260px; margin: 40px auto; color: var(--oro); }
-.divisor::before, .divisor::after{ content:""; flex:1; height:1px; background: linear-gradient(to right, transparent, var(--oro), transparent); }
+.divisor{ display:flex; align-items:center; gap: 14px; max-width: 260px; margin: 40px auto; color: var(--negro); }
+.divisor::before, .divisor::after{ content:""; flex:1; height:1px; background: linear-gradient(to right, transparent, var(--negro), transparent); }
 .divisor svg{ width:16px; height:16px; }
 .divisor svg path{ fill: var(--oro); }
 
@@ -488,7 +461,27 @@ filter: grayscale(1) contrast(1.05);
   text-align: center;
 }
 
-.parrafo{ max-width: 440px; margin: 0 auto 8px; line-height: 1.7; font-size: 1.08rem; }
+.parrafo{
+  position: relative;
+  max-width: 420px;
+  margin: 64px auto 8px;
+  padding: 34px 28px 26px;
+  background: var(--papel);
+  border-radius: 1px;
+  box-shadow: 0 10px 30px rgba(58,18,32,.14);
+  line-height: 1.7;
+  font-size: 1.08rem;
+}
+
+.parrafo-sello{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 42px;
+  height: auto;
+  transform: translate(-50%, -55%);
+  filter: drop-shadow(0 4px 8px rgba(58,18,32,.25));
+}
 .codigo{ display:flex; justify-content:center; gap: 18px; flex-wrap: wrap; margin: 24px 0 40px;  align-items: center;}
 .codigo-detalle{ display:flex;  align-items: center; justify-content: center;}
 .codigo-img{ max-width: 39%; height: auto; margin: 12px 0; }
@@ -581,25 +574,7 @@ filter: grayscale(1) contrast(1.05);
   overflow: visible;
 }
 
-.prohibido-cruz{
-  position: absolute;
-  inset: -6%;
-  pointer-events: none;
-}
-.prohibido-cruz::before,
-.prohibido-cruz::after{
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 118%;
-  height: 2px;
-  background: var(--negro);
-  opacity: .8;
-  border-radius: 2px;
-}
-.prohibido-cruz::before{ transform: translate(-50%, -50%) rotate(45deg); }
-.prohibido-cruz::after{  transform: translate(-50%, -50%) rotate(-45deg); }
+
 
 /*Boton de */
 .boton-rsvp{ margin-top: 48px; }
@@ -613,23 +588,17 @@ filter: grayscale(1) contrast(1.05);
   color: var(--papel);
   background: var(--negro);
   padding: 13px 34px;
-  border-radius: 30px;
+  border-radius: 1px;
   text-decoration:none;
   transition: background .25s ease, transform .25s ease;
 }
 .boton-rsvp:hover{ background: var(--bordo-oscuro); transform: translateY(-1px); }
-.regalo{
-  margin-top: 44px;
-  max-width: 380px;
-  margin-left: auto;
-  margin-right: auto;
-}
+
 
 .regalo-poema{
   font-family: var(--serif);
   font-style: italic;
   color: var(--tinta-suave);
-  line-height: 1.75;
   font-size: 1rem;
   margin: 0 0 16px;
 }
@@ -641,7 +610,48 @@ filter: grayscale(1) contrast(1.05);
   letter-spacing: 0.04em;
   margin: 0 0 16px;
 }
+.regalo-marco{
+  background: var(--papel);
+  position: relative;
+  max-width: 340px;
+  margin: 44px auto 30px;
+  padding: 30px 24px 46px;
+  box-shadow: 0 10px 26px rgba(58,18,32,.10);
+}
 
+/* las dos esquinas opuestas, tipo marco de cámara */
+.regalo-marco::before,
+.regalo-marco::after{
+  content: "";
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border: 1.1px solid var(--oro);
+}
+.regalo-marco::before{
+  top: -10px;
+  left: -10px;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 1px;
+}
+.regalo-marco::after{
+  bottom: -10px;
+  right: -10px;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 1px;
+}
+
+.regalo-marco-sello{
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 40px;
+  height: auto;
+  transform: translate(-50%, 55%);
+  filter: drop-shadow(0 4px 8px rgba(58,18,32,.25));
+}
 .regalo-link{
   display: inline-block;
   font-family: var(--serif);
@@ -650,9 +660,10 @@ filter: grayscale(1) contrast(1.05);
   color: var(--negro);
   border: 1px solid var(--oro);
   padding: 9px 24px;
-  border-radius: 24px;
+  border-radius: 2px;
   text-decoration: none;
   transition: background .25s ease, color .25s ease;
+  
 }
 .regalo-link:hover{
   background: var(--oro);
