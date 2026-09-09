@@ -822,7 +822,62 @@ html, body{
   background: var(--oro);
   color: var(--papel);
 }
+.regalo-alias{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto 16px;
+  padding: 14px 18px;
+  background: transparent;
+  border: 1px dashed var(--tinta-suave);
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: var(--serif);
+  transition: border-color .2s ease;
+}
+.regalo-alias:hover{ border-color: var(--oro); }
 
+.regalo-alias-label{
+  font-style: italic;
+  font-size: .85rem;
+  color: var(--tinta-suave);
+  letter-spacing: .04em;
+}
+.regalo-alias-valor{
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--negro);
+  letter-spacing: .02em;
+}
+.regalo-alias-copiar{
+  font-style: italic;
+  font-size: .75rem;
+  color: var(--oro);
+  margin-top: 2px;
+}
+
+.regalo-tarjeta{
+  margin: 30px auto 0;
+  max-width: 320px;
+}
+.regalo-tarjeta-texto{
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: .92rem;
+  color: var(--tinta-suave);
+  margin: 0 0 12px;
+}
+.regalo-link-secundario{
+  font-size: .9rem;
+  padding: 8px 20px;
+  opacity: .9;
+}
+.regalo-marco + .regalo-marco{
+  margin-top: 60px;
+}
 .confirmacion-marco{
   position: relative;
   margin: 56px auto 0;
@@ -840,7 +895,17 @@ html, body{
   align-items: center;
   justify-content: center;
 }
-
+@media (max-width: 480px){
+  .confirmacion-marco{
+    width: 96%;
+    padding: 92px 18px 46px;
+  }
+  .confirmacion-marco::before,
+  .confirmacion-marco::after{
+    width: 26px;
+    height: 46px;
+  }
+}
 .confirmacion-marco p{
   font-family: var(--serif);
   font-style: italic;
@@ -848,5 +913,73 @@ html, body{
   font-size: 1rem;
   line-height: 1.6;
   margin: 0 0 22px;
+}
+
+.form-rsvp{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+}
+.form-rsvp input[type="text"]{
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-style: italic;
+  padding: 10px 14px;
+  border: 1px solid var(--tinta-suave);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--tinta);
+}
+.form-rsvp input[type="text"]::placeholder{ color: var(--tinta-suave); opacity: .8; }
+.form-rsvp input[type="text"]:focus{ outline: none; border-color: var(--oro); }
+
+.rsvp-radio{
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: .95rem;
+  color: var(--tinta);
+}
+.rsvp-radio label{ display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+.rsvp-file-label{
+  display: block;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: .9rem;
+  color: var(--tinta-suave);
+  border: 1px dashed var(--tinta-suave);
+  border-radius: 3px;
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color .2s ease, color .2s ease;
+}
+.rsvp-file-label:hover{ border-color: var(--oro); color: var(--oro); }
+.rsvp-file-label input[type="file"]{ display: none; }
+
+.rsvp-archivo-nombre{
+  font-size: .82rem;
+  color: var(--tinta-suave);
+  font-style: italic;
+  margin-top: -6px;
+}
+
+.form-rsvp button[type="submit"]:disabled{
+  opacity: .6;
+  cursor: default;
+}
+
+.rsvp-mensaje{
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: .9rem;
+  color: var(--oro);
+  min-height: 1.2em;
 }
 .firma{ margin-top: 60px; font-family: var(--script); color: var(--oro); font-size: 1.6rem; }

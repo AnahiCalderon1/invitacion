@@ -260,33 +260,61 @@
           </div>
      
         <div class="regalo reveal">
-         
-          <div class="imagenes">
+
+            <!-- TARJETA 1: pago obligatorio de la tarjeta -->
+            <div class="regalo-marco">
+              <p class="regalo-poema">
+                El mejor regalo es tu compañía en nuestra boda. La idea es celebrar y compartir con familia y amigos en este día tan especial. Por eso, con el abono de la tarjeta es más que suficiente.
+              </p>
+              <p class="regalo-monto">El valor de la tarjeta es de $180.000</p>
+
+              <button type="button" class="regalo-alias" id="btnCopiarAlias">
+                <span class="regalo-alias-label">Preferimos transferencia — Alias</span>
+                <span class="regalo-alias-valor" id="aliasValor">casamiento.caroyfacu</span>
+                <span class="regalo-alias-copiar" id="textoCopiar">Tocar para copiar</span>
+              </button>
+
+              <img class="regalo-marco-sello" src="imagenes/selloCarta.svg" alt="">
+            </div>
+
+            <div class="regalo-tarjeta">
+              <p class="regalo-tarjeta-texto">Si preferís pagar con tarjeta de crédito, te dejamos el link para que puedas hacerlo:</p>
+              <a class="regalo-link regalo-link-secundario" href="https://mpago.la/317Ns2b" target="_blank" rel="noopener">Abonar vía Mercado Pago</a>
+            </div>
+
+            <!-- TARJETA 2: regalo opcional, aparte de la tarjeta -->
+            <div class="regalo-marco">
+              <p class="regalo-poema">
+                Si, de cualquier manera, querés tener un detalle con nosotros, podés utilizar el mismo alias de arriba.
+              </p>
+              <img class="regalo-marco-sello" src="imagenes/selloCarta.svg" alt="">
+            </div>
 
           </div>
-         <div class="regalo-marco">
-          <p class="regalo-poema">
-            El mejor regalo es tu compañía en nuestro casamiento. La idea es celebrar y compartir con nuestra gente más cercana en este día tan importante para nosotros. Por eso, con el abono de tu tarjeta es más que suficiente para nosotros.
-          </p>
-          <p class="regalo-monto">El siguiente botón te llevará al pago online.</p>
-          <img class="regalo-marco-sello" src="imagenes/selloCarta.svg" alt="">
-        </div> <a class="regalo-link" href="https://mpago.la/317Ns2b" target="_blank" rel="noopener">Abonar vía Mercado Pago</a>
-        <div class="regalo-marco">
-          <p class="regalo-poema">
-            Si, de cualquier manera, queres tener un detalle con nosotros,
-             el link de pago que te direcciona a continuación, podrás optar con tu aporte.
-              
-          </p>
-          <p class="regalo-monto">El siguiente botón te llevará al obsequio online.</p>
-          <img class="regalo-marco-sello" src="imagenes/selloCarta.svg" alt="">
-        </div> <a class="regalo-link" href="https://link.mercadopago.com.ar/obsequioboda" target="_blank" rel="noopener">Regalo vía Mercado Pago</a>
-        
-        
-      </div>
-      <div class="confirmacion-marco reveal">  <p>Tenés tiempo de confirmar tu asistencia hasta el 10 de noviembre. No te demores!</p>
-          <a class="boton-rsvp" href="https://wa.me/5493518566732?text=%C2%A1Hola!%20Quiero%20confirmar%20mi%20asistencia%20a%20la%20boda.%0A%0A%E2%9C%8F%EF%B8%8F%20Mi%20nombre:%20%0A%F0%9F%A4%9D%20Acompa%C3%B1ante%20(si%20tengo%20%2B1):%20%0A%0A%F0%9F%93%83%20A%20continuaci%C3%B3n%20env%C3%ADo%20el%20comprobante%20de%20pago.%20En%20caso%20de%20ir%20con%20%2B1,%20env%C3%ADo%20el%20comprobante%20de%20cada%20invitaci%C3%B3n." target="_blank" rel="noopener">Confirmar asistencia</a>      </div>
-          <p class="firma">Los esperamos con amor</p>
+      <div class="confirmacion-marco reveal">
+      <p>Tenés tiempo de confirmar tu asistencia hasta el 10 de noviembre. No te demores!</p>
+
+      <form id="formRSVP" class="form-rsvp">
+        <input type="text" id="rsvpNombre" placeholder="Tu nombre" required>
+        <input type="text" id="rsvpAcompanante" placeholder="Acompañante (si tenés +1)">
+
+        <div class="rsvp-radio">
+          <label><input type="radio" name="asistencia" value="Sí, voy" required> Sí, voy</label>
+          <label><input type="radio" name="asistencia" value="No puedo ir"> No puedo ir</label>
         </div>
+
+        <label class="rsvp-file-label" for="rsvpComprobante">
+          Adjuntar comprobante de pago
+          <input type="file" id="rsvpComprobante" accept="image/*,application/pdf">
+        </label>
+        <span id="rsvpArchivoNombre" class="rsvp-archivo-nombre"></span>
+
+        <button type="submit" class="boton-rsvp" id="btnEnviarRSVP">Confirmar asistencia</button>
+        <p id="rsvpMensaje" class="rsvp-mensaje"></p>
+      </form>
+    </div>
+      <p class="firma">Los esperamos con amor</p>
+        
        
      
   </div>

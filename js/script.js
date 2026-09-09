@@ -1,10 +1,5 @@
 // EDITAR ACÁ: fecha y hora exacta del casamiento
 const FECHA_BODA = new Date(2026, 10, 21, 17, 30, 0);
-
-// cuánto dura la animación de apertura (sello rompiéndose + luz + crossfade
-// a la imagen del sobre abierto + el collage saliendo) antes de mostrar la
-// invitación completa. Si alargás o acortás esas animaciones en
-// estilos.css, ajustá este número para que combinen.
 const DURACION_APERTURA = 900;
 
 const sobre      = document.getElementById('sobre');
@@ -14,6 +9,7 @@ const btnCerrar  = document.getElementById('btnCerrar');
 const eventos = document.querySelectorAll('.evento');
 const lineaProgreso = document.getElementById('lineaProgreso');
 let maxVisible = -1;
+
 const revealEls = document.querySelectorAll('.reveal');
 const obsReveal = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -21,12 +17,7 @@ const obsReveal = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.2 });
 revealEls.forEach(el => obsReveal.observe(el));
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.classList.add('visible');
-  });
-}, { threshold: 0.3 });
-eventos.forEach(ev => obs.observe(ev));
+
 let abierto = false;
 const obsPrograma = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -40,13 +31,12 @@ const obsPrograma = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.4 });
-
 eventos.forEach(ev => obsPrograma.observe(ev));
+
 function abrirSobre(){
   if (abierto) return;
   abierto = true;
   sobre.classList.add('abierto');
-
   setTimeout(() => {
     invitacion.classList.add('visible');
     document.body.style.overflow = 'auto';
@@ -88,6 +78,7 @@ function actualizarCuentaRegresiva(){
 }
 actualizarCuentaRegresiva();
 setInterval(actualizarCuentaRegresiva, 1000);
+
 // --- REPRODUCTOR DE MÚSICA EN VINILO ---
 const audioBoda = document.getElementById('musicaBoda');
 const viniloImg = document.getElementById('viniloImg');
@@ -104,6 +95,7 @@ if (btnMusica && audioBoda) {
     }
   });
 }
+
 // --- CARRUSEL DE FOTOS/VIDEO ---
 const slides = document.querySelectorAll('.slide');
 const btnAnterior = document.getElementById('anterior');
@@ -115,19 +107,12 @@ function mostrarSlide(index){
   slides.forEach((slide, i) => {
     const video = slide.querySelector('video');
     const esActivo = i === index;
-
     slide.classList.toggle('active', esActivo);
-
     if (video){
-      if (esActivo){
-        video.currentTime = 0;
-        video.play();
-      } else {
-        video.pause();
-      }
+      if (esActivo){ video.currentTime = 0; video.play(); }
+      else { video.pause(); }
     }
   });
-
   indicador.textContent = `${index + 1} / ${slides.length}`;
 }
 
@@ -136,11 +121,87 @@ if (btnAnterior && btnSiguiente && slides.length){
     slideActual = (slideActual - 1 + slides.length) % slides.length;
     mostrarSlide(slideActual);
   });
-
   btnSiguiente.addEventListener('click', () => {
     slideActual = (slideActual + 1) % slides.length;
     mostrarSlide(slideActual);
   });
+  mostrarSlide(slideActual);
+}
+// --- COPIAR ALIAS AL PORTAPAPELES ---
+const btnCopiarAlias = document.getElementById('btnCopiarAlias');
+const aliasValor = document.getElementById('aliasValor');
+const textoCopiar = document.getElementById('textoCopiar');
 
-  mostrarSlide(slideActual); // estado inicial
+if (btnCopiarAlias){
+  btnCopiarAlias.addEventListener('click', () => {
+    navigator.clipboard.writeText(aliasValor.textContent.trim()).then(() => {
+      textoCopiar.textContent = '¡Copiado!';
+      setTimeout(() => { textoCopiar.textContent = 'Tocar para copiar'; }, 1800);
+    });
+  });
+}
+// --- RSVP: envío a Google Sheets vía Apps Script ---
+const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyfx-NvTmF1ojwJcZ7g51jk5EyC8JrFY8ba0JmGn4hzwuAvVT3sJ0K4pn6FKP4E1xaXlg/exec'; 
+
+const formRSVP = document.getElementById('formRSVP');
+const inputComprobante = document.getElementById('rsvpComprobante');
+const nombreArchivoSpan = document.getElementById('rsvpArchivoNombre');
+const btnEnviarRSVP = document.getElementById('btnEnviarRSVP');
+const mensajeRSVP = document.getElementById('rsvpMensaje');
+
+if (inputComprobante){
+  inputComprobante.addEventListener('change', () => {
+    nombreArchivoSpan.textContent = inputComprobante.files[0]
+      ? inputComprobante.files[0].name
+      : '';
+  });
+}
+
+function archivoABase64(file){
+  return new Promise((resolve, reject) => {
+    const lector = new FileReader();
+    lector.onload = () => resolve(lector.result);
+    lector.onerror = reject;
+    lector.readAsDataURL(file);
+  });
+}
+
+if (formRSVP){
+  formRSVP.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btnEnviarRSVP.disabled = true;
+    btnEnviarRSVP.textContent = 'Enviando...';
+    mensajeRSVP.textContent = '';
+
+    const nombre = document.getElementById('rsvpNombre').value.trim();
+    const acompanante = document.getElementById('rsvpAcompanante').value.trim();
+    const asistencia = formRSVP.querySelector('input[name="asistencia"]:checked')?.value || '';
+    const archivo = inputComprobante.files[0];
+    const datos = { nombre, acompanante, asistencia, comprobante: null };
+
+    try {
+      if (archivo){
+        const base64 = await archivoABase64(archivo);
+        datos.comprobante = { base64, tipo: archivo.type, nombreArchivo: archivo.name };
+      }
+
+      await fetch(URL_APPS_SCRIPT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(datos)
+      });
+
+      mensajeRSVP.textContent = '¡Gracias! Tu confirmación fue enviada 💛';
+      formRSVP.reset();
+      nombreArchivoSpan.textContent = '';
+
+    } catch (error) {
+      mensajeRSVP.textContent = 'Hubo un problema al enviar. Probá de nuevo.';
+      console.error(error);
+    } finally {
+      btnEnviarRSVP.disabled = false;
+      btnEnviarRSVP.textContent = 'Confirmar asistencia';
+    }
+  });
 }
