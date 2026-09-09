@@ -483,8 +483,8 @@ filter: grayscale(1) contrast(1.05);
   transform: translate(-50%, -55%);
   filter: drop-shadow(0 4px 8px rgba(58,18,32,.25));
 }
-.codigo{ display:flex; justify-content:center; gap: 18px; flex-wrap: wrap; margin: 24px 0 40px;  align-items: center;}
-.codigo-detalle{ display:flex;  align-items: center; justify-content: center;}
+.codigo{ display:flex; justify-content:center; gap: 18px; flex-wrap: wrap; margin: 24px 0 40px;  align-items: center; color: var(--negro);}
+.codigo-detalle{ display:flex;  align-items: center; justify-content: center; color: var(--negro);}
 .codigo-img{ max-width: 39%; height: auto; margin: 12px 0; }
 
 /*Dress Code*/
@@ -508,14 +508,17 @@ filter: grayscale(1) contrast(1.05);
 .mono-izq{
   top: -34px;
   left: 18px;
-  width: clamp(60px, 16vw, 124px);   /* antes: 34-48px, ahora casi el doble */
+  width: clamp(60px, 26vw, 124px);  
 }
-
+@media (max-width: 380px){
+  .mono-izq{ width: clamp(6px, 2vw, 240px); }
+}
 .mono-der{
   bottom: -34px;
   right: 18px;
-  width: clamp(90px, 22vw, 120px);  /* antes: 64-92px */
+  width: clamp(90px, 22vw, 120px);  
 }
+
 .paleta-colores{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -694,4 +697,31 @@ filter: grayscale(1) contrast(1.05);
   color: var(--papel);
 }
 
+.confirmacion-marco{
+  position: relative;
+  width: min(92vw, 420px);
+  margin: 56px auto 0;
+  padding: 60px 34px 44px;   /* aire arriba para el moño, costados para las líneas */
+
+  /* clave: la proporción real del archivo, no lo dejamos "libre" */
+  aspect-ratio: 330 / 430;   /* ⚠️ AJUSTAR: poné el ancho/alto real del viewBox de marcoConfir.svg */
+
+  background-image: url('../imagenes/marcoConfir.svg');
+  background-size: 100% 100%;   /* como el aspect-ratio ya es el correcto, esto NO deforma nada */
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmacion-marco p{
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--tinta);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 22px;
+}
 .firma{ margin-top: 60px; font-family: var(--script); color: var(--oro); font-size: 1.6rem; }
