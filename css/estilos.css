@@ -895,10 +895,10 @@ html, body{
   align-items: center;
   justify-content: center;
 }
-@media (max-width: 480px){
+@media (max-width: 580px){
   .confirmacion-marco{
     width: 96%;
-    padding: 92px 18px 46px;
+    padding: 162px 28px 66px;
   }
   .confirmacion-marco::before,
   .confirmacion-marco::after{
