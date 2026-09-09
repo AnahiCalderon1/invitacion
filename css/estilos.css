@@ -517,7 +517,7 @@ html, body{
   position: absolute;
   top: 0;
   left: 50%;
-  width: 42px;
+  width: 62px;
   height: auto;
   transform: translate(-50%, -55%);
   filter: drop-shadow(0 4px 8px rgba(58,18,32,.25));
@@ -714,7 +714,7 @@ html, body{
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 40px;
+  width: 58px;
   height: auto;
   transform: translate(-50%, 55%);
   filter: drop-shadow(0 4px 8px rgba(58,18,32,.25));
