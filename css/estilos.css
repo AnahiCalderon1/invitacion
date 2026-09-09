@@ -640,7 +640,93 @@ html, body{
   position: relative;
   overflow: visible;
 }
+/*FOTOS*/
+.galeria-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px auto;
+  max-width: 320px;
+}
 
+/* El marco Polaroid con la sombra sutil aplicada */
+/*FOTOS*/
+.galeria-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px auto;
+  max-width: 320px;
+}
+
+/* Marco Polaroid hecho 100% con CSS, con textura de papel sutil */
+.polaroid{
+  position: relative;
+  width: 100%;
+  background-color: #f7f2e6;
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,.55) 0, transparent 42%),
+    radial-gradient(circle at 78% 68%, rgba(58,18,32,.05) 0, transparent 50%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/></svg>");
+  padding: 16px 16px 58px;   /* margen inferior grande, típico de Polaroid */
+  border-radius: 2px;
+  box-shadow:
+    0 2px 4px rgba(58,18,32,.10),
+    0 14px 28px rgba(58,18,32,.22);
+  transform: rotate(-1.6deg);
+  transition: transform .3s ease;
+}
+.polaroid:hover{ transform: rotate(0deg) scale(1.015); }
+
+.polaroid-foto{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;   /* cuadrada, como una polaroid real */
+  overflow: hidden;
+  background: #111;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.10);
+}
+
+.slides-contenedor{
+  position: absolute;
+  inset: 0;
+}
+
+.slide{
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+.slide.active{ display: block; }
+
+.slide img,
+.slide video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Botones de navegación */
+.galeria-controles {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+  color: #4a4a4a;
+}
+
+.btn-carrusel {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #333;
+  transition: transform 0.2s ease;
+}
+
+.btn-carrusel:hover {
+  transform: scale(1.2);
+}
 
 
 /*Boton de */
@@ -717,7 +803,7 @@ html, body{
   width: 58px;
   height: auto;
   transform: translate(-50%, 55%);
-  filter: drop-shadow(0 4px 8px rgba(58,18,32,.25));
+  filter: drop-shadow(0 4px 8px rgba(58, 18, 32, 0.288));
 }
 .regalo-link{
   display: inline-block;

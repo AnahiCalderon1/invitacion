@@ -104,3 +104,43 @@ if (btnMusica && audioBoda) {
     }
   });
 }
+// --- CARRUSEL DE FOTOS/VIDEO ---
+const slides = document.querySelectorAll('.slide');
+const btnAnterior = document.getElementById('anterior');
+const btnSiguiente = document.getElementById('siguiente');
+const indicador = document.getElementById('indicadorSlide');
+let slideActual = 0;
+
+function mostrarSlide(index){
+  slides.forEach((slide, i) => {
+    const video = slide.querySelector('video');
+    const esActivo = i === index;
+
+    slide.classList.toggle('active', esActivo);
+
+    if (video){
+      if (esActivo){
+        video.currentTime = 0;
+        video.play();
+      } else {
+        video.pause();
+      }
+    }
+  });
+
+  indicador.textContent = `${index + 1} / ${slides.length}`;
+}
+
+if (btnAnterior && btnSiguiente && slides.length){
+  btnAnterior.addEventListener('click', () => {
+    slideActual = (slideActual - 1 + slides.length) % slides.length;
+    mostrarSlide(slideActual);
+  });
+
+  btnSiguiente.addEventListener('click', () => {
+    slideActual = (slideActual + 1) % slides.length;
+    mostrarSlide(slideActual);
+  });
+
+  mostrarSlide(slideActual); // estado inicial
+}
