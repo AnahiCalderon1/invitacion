@@ -14,6 +14,13 @@ const btnCerrar  = document.getElementById('btnCerrar');
 const eventos = document.querySelectorAll('.evento');
 const lineaProgreso = document.getElementById('lineaProgreso');
 let maxVisible = -1;
+const revealEls = document.querySelectorAll('.reveal');
+const obsReveal = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.2 });
+revealEls.forEach(el => obsReveal.observe(el));
 const obs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) e.target.classList.add('visible');

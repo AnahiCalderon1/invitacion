@@ -148,6 +148,7 @@ html, body{
   inset: 0;
   background: var(--fondo);
   overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   opacity: 0;
   visibility: hidden;
@@ -194,7 +195,15 @@ html, body{
 
 .orla{ width: 46px; height:46px; margin: 0 auto 18px; }
 .orla svg path{ fill:none; stroke: var(--oro); stroke-width: 1.4; }
-
+.reveal{
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible{
+  opacity: 1;
+  transform: translateY(0);
+}
 .kicker{ font-style: italic; letter-spacing: 0.04em; color: var(--negro); font-size: 1.05rem; margin: 4px 0 2px; }
 /*Invitacion primera parte*/
 .hoja{
@@ -202,12 +211,12 @@ html, body{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-filter: grayscale(1) contrast(1.05);
-  width: 100%;
-  border-radius: 4px;
+  filter: grayscale(1) contrast(1.05);
+  margin: 8px;
+  width: calc(100% - 16px);
+  min-height: calc(100dvh - 16px);
+  border-radius: 6px;
   overflow: hidden;
-
-  min-height: 80svh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -490,7 +499,8 @@ filter: grayscale(1) contrast(1.05);
 /*Dress Code*/
 .colores-marco{
   position: relative;
-  width: min(92vw, 460px);
+  width: min(92%, 460px);
+  justify-content: center;
   margin: 40px auto 8px;
   padding: 84px 30px 100px;   /* subí un poco más el padding top y bottom */
   background: var(--papel);
@@ -699,10 +709,9 @@ filter: grayscale(1) contrast(1.05);
 
 .confirmacion-marco{
   position: relative;
-  width: min(92vw, 420px);
   margin: 56px auto 0;
   padding: 60px 34px 44px;   /* aire arriba para el moño, costados para las líneas */
-
+ width: min(92%, 420px);
   /* clave: la proporción real del archivo, no lo dejamos "libre" */
   aspect-ratio: 330 / 430;   /* ⚠️ AJUSTAR: poné el ancho/alto real del viewBox de marcoConfir.svg */
 
