@@ -88,3 +88,19 @@ function actualizarCuentaRegresiva(){
 }
 actualizarCuentaRegresiva();
 setInterval(actualizarCuentaRegresiva, 1000);
+// --- REPRODUCTOR DE MÚSICA EN VINILO ---
+const audioBoda = document.getElementById('musicaBoda');
+const viniloImg = document.getElementById('viniloImg');
+const btnMusica = document.getElementById('btnMusica');
+
+if (btnMusica && audioBoda) {
+  btnMusica.addEventListener('click', () => {
+    if (audioBoda.paused) {
+      audioBoda.play();
+      viniloImg.classList.add('girando');
+    } else {
+      audioBoda.pause();
+      viniloImg.classList.remove('girando');
+    }
+  });
+}

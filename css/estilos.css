@@ -252,7 +252,37 @@ html, body{
   line-height: 1.05;
   margin: 6px 0 18px;
 }
+/*Vinilo*/
+.contenedor-vinilo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  cursor: pointer;
+}
 
+.vinilo {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.85;
+}
+
+.vinilo:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+.girando {
+  animation: girar 3s linear infinite;
+  opacity: 1;
+}
+
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 /* Fecha dentro del marco decorativo */
 .marco-fecha{
   position: relative;
