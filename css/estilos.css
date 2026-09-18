@@ -379,7 +379,7 @@ html, body{
   max-width: 380px;
   margin: 0 auto 54px;
   padding: 38px 30px 8px;
-  background-color: #f8e8c7;
+  background-color: #faebcd;
   background-image:
     radial-gradient(circle at 15% 18%, rgba(255,255,255,.45) 0, transparent 40%),
     radial-gradient(circle at 85% 15%, rgba(58,18,32,.10) 0, transparent 45%),
@@ -1148,3 +1148,44 @@ html, body{
   min-height: 1.2em;
 }
 .firma{ margin-top: 60px; font-family: var(--script); color: var(--oro); font-size: 1.6rem; }
+/* Indicador de scroll en la primera pantalla */
+.scroll-indicador{
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--papel);
+  opacity: .85;
+  transition: opacity .4s ease;
+  animation: scroll-rebote 1.8s ease-in-out infinite;
+}
+
+.scroll-indicador.oculto{
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scroll-indicador-texto{
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: .78rem;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+
+.scroll-flecha{
+  width: 14px;
+  height: 14px;
+  border-right: 1.6px solid var(--papel);
+  border-bottom: 1.6px solid var(--papel);
+  transform: rotate(45deg);
+}
+
+@keyframes scroll-rebote{
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 8px); }
+}
