@@ -116,6 +116,19 @@ if (btnHospedaje && hospedajeContenido){
       : null;
   });
 }
+// --- PALETA DE COLORES: acordeón plegable ---
+const btnColores = document.getElementById('btnColores');
+const coloresContenido = document.getElementById('coloresContenido');
+
+if (btnColores && coloresContenido){
+  btnColores.addEventListener('click', () => {
+    const abierto = btnColores.classList.toggle('abierto');
+    btnColores.setAttribute('aria-expanded', abierto);
+    coloresContenido.style.maxHeight = abierto
+      ? coloresContenido.scrollHeight + 'px'
+      : null;
+  });
+}
 // --- CARRUSEL DE FOTOS/VIDEO ---
 const slides = document.querySelectorAll('.slide');
 const btnAnterior = document.getElementById('anterior');
