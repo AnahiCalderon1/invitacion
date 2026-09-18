@@ -263,7 +263,7 @@ html, body{
 
 .vinilo {
   width: 60%;
-  height: 50%;
+  height: 60%;
   border-radius: 50%;
   transition: transform 0.3s ease, opacity 0.3s ease;
   opacity: 0.85;
