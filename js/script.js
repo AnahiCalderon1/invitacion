@@ -95,7 +95,27 @@ if (btnMusica && audioBoda) {
     }
   });
 }
+// --- INDICADOR DE SCROLL: se oculta apenas la persona empieza a bajar ---
+const scrollIndicador = document.querySelector('.scroll-indicador');
 
+if (scrollIndicador && invitacion){
+  invitacion.addEventListener('scroll', () => {
+    scrollIndicador.classList.toggle('oculto', invitacion.scrollTop > 40);
+  });
+}
+// --- HOSPEDAJE: acordeón plegable ---
+const btnHospedaje = document.getElementById('btnHospedaje');
+const hospedajeContenido = document.getElementById('hospedajeContenido');
+
+if (btnHospedaje && hospedajeContenido){
+  btnHospedaje.addEventListener('click', () => {
+    const abierto = btnHospedaje.classList.toggle('abierto');
+    btnHospedaje.setAttribute('aria-expanded', abierto);
+    hospedajeContenido.style.maxHeight = abierto
+      ? hospedajeContenido.scrollHeight + 'px'
+      : null;
+  });
+}
 // --- CARRUSEL DE FOTOS/VIDEO ---
 const slides = document.querySelectorAll('.slide');
 const btnAnterior = document.getElementById('anterior');

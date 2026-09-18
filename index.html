@@ -52,6 +52,10 @@
    </div>
         <p class="kicker">Nos casamos</p>
         <h1 class="nombres">Caro &amp; Facu</h1>
+                <div class="scroll-indicador" aria-hidden="true">
+          <span class="scroll-indicador-texto">Deslizá hacia abajo</span>
+          <span class="scroll-flecha"></span>
+        </div>
    </div>
    <div class="invitacion-contenido">
       <!-- Elemento de audio invisible -->
@@ -137,12 +141,14 @@
 
         
       </div>
-     <div class="parrafo reveal">
-        <img class="parrafo-sello" src="imagenes/selloCarta.svg" alt="">
-        <p>
-          Tanto la ceremonia como la recepción se llevarán a cabo en el mismo lugar.<br>
-          Será un placer celebrar esta noche junto a ustedes.
-        </p>
+           <div class="parrafo-wrap reveal">
+        <img class="parrafo-mono" src="imagenes/monoDerecho.svg" alt="">
+        <div class="parrafo">
+          <p>
+            Tanto la ceremonia como la recepción se llevarán a cabo en el mismo lugar.<br>
+            Será un placer celebrar esta noche junto a ustedes.
+          </p>
+        </div>
       </div>
       <div class="programa reveal">
         <p class="programa-titulo">Lugar</p>
@@ -155,7 +161,31 @@
         <iframe src="https://www.google.com/maps?q=Nawan+Hotel+Serrano+Sinsacate&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa - Nawan Hotel Serrano"></iframe>
         <span class="mapa-etiqueta">Ver en Google Maps</span>
       </a>
+              <div class="hospedaje reveal" id="hospedaje">
+          <button class="hospedaje-toggle" id="btnHospedaje" type="button" aria-expanded="false" aria-controls="hospedajeContenido">
+            <span class="hospedaje-titulo">¿Te quedas a dormir?</span>
+            <span class="hospedaje-sub">Información sobre hospedaje en el hotel</span>
+            <span class="hospedaje-cta">
+              <span class="hospedaje-icono" aria-hidden="true"></span>
+              <span class="hospedaje-cta-texto">Tocá para ver más</span>
+            </span>
+          </button>
 
+          <div class="hospedaje-contenido" id="hospedajeContenido">
+            <div class="divisor">
+              <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.1 2.2 4 6 4c2 0 3.6 1.2 4.4 2.9C11.2 5.2 12.8 4 14.8 4c3.8 0 5.6 4.1 4 7.7C19.5 16.4 12 21 12 21z"/></svg>
+            </div>
+            <div class="hospedaje-contenido-inner">
+              <p>Nawan Hotel Serrano — para ver habitaciones, tarifas y más detalles, podés visitar <a class="hospedaje-web" href="https://nawan.com.ar/" target="_blank" rel="noopener">[ejemplo.com]</a></p>
+              <p class="hospedaje-contacto">
+                Reservá comunicándote al
+                <a class="hospedaje-tel" href="tel:+549XXXXXXXXXX">+5493512031825</a>
+                — contales que venís a nuestro casamiento, los invitados tienen un descuento especial.
+              </p>
+            </div>
+          </div>
+        </div>
+        
       <div class="programa reveal">
         <p class="programa-titulo">Dress code</p>
       </div>
@@ -163,7 +193,7 @@
         <div class="codigo-titulo">
             <h3> <strong>•  ETIQUETA FORMAL  •</strong> </h3>
 
-            <P> Deseamos que te sientas especial, así que no dudes en lucir tu mejor outfit.</P>
+            <P class="codigo-texto"> Deseamos que te sientas especial, así que no dudes en lucir tu mejor outfit.</P>
           </div>
         </div>
 
@@ -245,6 +275,9 @@
                     <img src="imagenes/foto3.svg" alt="Foto 3">
                   </div>
                   <div class="slide">
+                    <video src="imagenes/videoCollage.mp4" muted loop playsinline></video>
+                  </div>
+                  <div class="slide">
                     <video src="imagenes/videoCorto.mp4" muted loop playsinline></video>
                   </div>
                 </div>
@@ -253,9 +286,9 @@
 
             <!-- Controles abajo -->
             <div class="galeria-controles">
-              <button class="btn-carrusel" id="anterior">❮</button>
-              <span id="indicadorSlide">1 / 4</span>
-              <button class="btn-carrusel" id="siguiente">❯</button>
+              <button class="btn-carrusel" id="anterior">.❮</button>
+              <span id="indicadorSlide">1 / 5</span>
+              <button class="btn-carrusel" id="siguiente">❯.</button>
             </div>
           </div>
      
