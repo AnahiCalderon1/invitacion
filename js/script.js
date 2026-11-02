@@ -174,7 +174,7 @@ if (btnCopiarAlias){
   });
 }
 // --- RSVP: envío a Google Sheets vía Apps Script ---
-const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyfx-NvTmF1ojwJcZ7g51jk5EyC8JrFY8ba0JmGn4hzwuAvVT3sJ0K4pn6FKP4E1xaXlg/exec'; 
+const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbxOeB1qpKqIVeLugKU4P0U86FYKqgT00pjegpGhva_ZtVB1y51bkvpG2EBkiV4mu7EXHA/exec'; 
 
 const formRSVP = document.getElementById('formRSVP');
 const inputComprobante = document.getElementById('rsvpComprobante');
@@ -235,6 +235,78 @@ if (formRSVP){
     } finally {
       btnEnviarRSVP.disabled = false;
       btnEnviarRSVP.textContent = 'Confirmar asistencia';
+    }
+  });
+}
+// --- TRANSPORTE: formulario de la trafic ---
+const formTransporte = document.getElementById('formTransporte');
+const trOpciones = document.getElementById('trOpciones');
+const trIda = document.getElementById('trIda');
+const trVuelta = document.getElementById('trVuelta');
+const trCantidad = document.getElementById('trCantidad');
+const btnEnviarTransporte = document.getElementById('btnEnviarTransporte');
+const trMensaje = document.getElementById('trMensaje');
+
+if (formTransporte){
+  // mostrar/ocultar tramos y cantidad según la respuesta
+  formTransporte.querySelectorAll('input[name="usaTransporte"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const usa = formTransporte.querySelector('input[name="usaTransporte"]:checked')?.value === 'Sí';
+      trOpciones.classList.toggle('visible', usa);
+      if (usa && !trIda.checked && !trVuelta.checked){
+        trIda.checked = true;
+        trVuelta.checked = true; // por defecto ida y vuelta
+      }
+    });
+  });
+
+  formTransporte.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    trMensaje.textContent = '';
+
+    const nombre = document.getElementById('trNombre').value.trim();
+    const usa = formTransporte.querySelector('input[name="usaTransporte"]:checked')?.value || '';
+
+    if (usa === 'Sí' && !trIda.checked && !trVuelta.checked){
+      trMensaje.textContent = 'Elegí al menos un tramo (ida o vuelta).';
+      return;
+    }
+
+    const tramos = trIda.checked && trVuelta.checked
+      ? 'Ida y vuelta'
+      : trIda.checked
+        ? 'Solo ida'
+        : trVuelta.checked
+          ? 'Solo vuelta'
+          : '';
+    const datos = {
+      tipo: 'transporte',
+      nombre,
+      usaTransporte: usa,
+      tramos: usa === 'Sí' ? tramos : '',
+      cantidad: usa === 'Sí' ? (parseInt(trCantidad.value, 10) || 1) : 0
+    };
+
+    btnEnviarTransporte.disabled = true;
+    btnEnviarTransporte.textContent = 'Enviando...';
+
+    try {
+      await fetch(URL_APPS_SCRIPT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(datos)
+      });
+
+      trMensaje.textContent = '¡Gracias! Registramos tu respuesta 💛';
+      formTransporte.reset();
+      trOpciones.classList.remove('visible');
+    } catch (error) {
+      trMensaje.textContent = 'Hubo un problema al enviar. Probá de nuevo.';
+      console.error(error);
+    } finally {
+      btnEnviarTransporte.disabled = false;
+      btnEnviarTransporte.textContent = 'Confirmar transporte';
     }
   });
 }

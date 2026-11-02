@@ -355,6 +355,56 @@
         <p id="rsvpMensaje" class="rsvp-mensaje"></p>
       </form>
     </div>
+          <!-- ============================================================
+           TRANSPORTE: trafic Patio Olmos ⇄ salón
+      ============================================================= -->
+      <div class="transporte reveal">
+        <div class="transporte-marco">
+          <p class="programa-titulo transporte-titulo">Transporte</p>
+
+          <p class="transporte-texto">
+            Para que disfruten sin preocuparse por el regreso, habrá una trafic que sale desde
+            <strong>Patio Olmos (Córdoba)</strong> hacia el salón.
+          </p>
+
+          <div class="transporte-horarios">
+            <div class="transporte-horario">
+              <span class="transporte-etiqueta">Ida</span>
+              <span class="transporte-hora">17:00 hs</span>
+              <span class="transporte-lugar">Patio Olmos → Nawan Hotel Serrano</span>
+            </div>
+            <div class="transporte-horario">
+              <span class="transporte-etiqueta">Vuelta</span>
+              <span class="transporte-hora">02:00 hs</span>
+              <span class="transporte-lugar">Nawan Hotel Serrano → Patio Olmos</span>
+            </div>
+          </div>
+
+          <p class="transporte-texto">¿Querés usar el transporte? Contanos así reservamos tu lugar.</p>
+
+          <form id="formTransporte" class="form-rsvp">
+            <input type="text" id="trNombre" placeholder="Tu nombre" required>
+
+            <div class="rsvp-radio">
+              <label><input type="radio" name="usaTransporte" value="Sí" required> Sí, lo uso</label>
+              <label><input type="radio" name="usaTransporte" value="No"> No, voy por mi cuenta</label>
+            </div>
+
+            <div class="transporte-opciones" id="trOpciones">
+              <p class="transporte-sub">¿Qué tramos necesitás?</p>
+              <div class="rsvp-radio tr-checks">
+                <label><input type="checkbox" id="trIda" value="Ida"> Ida</label>
+                <label><input type="checkbox" id="trVuelta" value="Vuelta"> Vuelta</label>
+              </div>
+              <input type="number" id="trCantidad" min="1" max="10" value="1"
+                     placeholder="Cantidad de personas" inputmode="numeric">
+            </div>
+
+            <button type="submit" class="boton-rsvp" id="btnEnviarTransporte">Confirmar transporte</button>
+            <p id="trMensaje" class="rsvp-mensaje"></p>
+          </form>
+        </div>
+      </div>
       <p class="firma">Los esperamos con amor</p>
         
        
